@@ -318,32 +318,55 @@ function normalize(text){
   .replace(/[^a-zа-яәіңғүұқөһ0-9\s-]/gi," ");
 }
 
-function getAnswer(question){
- const q=normalize(question);
- let best=null;
- let bestScore=0;
 
- for(const item of Object.values(knowledge)){
-  let score=0;
-  for(const term of item.terms){
-   if(q.includes(normalize(term)))score++;
+const GEMINI_URL =
+  "https://flame-ai-assistant.sashatuluaeva2022.workers.dev/";
+
+async function getAnswer(question) {
+  const response = await fetch(GEMINI_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ question })
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.error || "Server error");
   }
-  if(score>bestScore){
-   bestScore=score;
-   best=item;
-  }
- }
- return best?best[currentLang]:ui[currentLang].unknown;
+
+  const data = await response.json();
+  return data.answer || "No answer generated.";
 }
 
-function sendMessage(){
- const input=document.getElementById("question");
- const question=input.value.trim();
- if(!question)return;
+async function sendMessage() {
+  const input = document.getElementById("question");
+  const question = input.value.trim();
+  if (!question) return;
 
- addMessage(question,"user");
- input.value="";
- addMessage(getAnswer(question),"bot");
+  const button = document.getElementById("sendButton");
+  button.disabled = true;
+  input.disabled = true;
+
+  addMessage(question, "user");
+  input.value = "";
+
+  try {
+    const answer = await getAnswer(question);
+    addMessage(answer, "bot");
+  } catch (error) {
+    addMessage(
+      "Не удалось получить ответ Gemini. " +
+      "Проверь настройки Cloudflare Worker. " +
+      error.message,
+      "bot"
+    );
+  } finally {
+    button.disabled = false;
+    input.disabled = false;
+    input.focus();
+  }
 }
 
 function renderSuggestions(){
