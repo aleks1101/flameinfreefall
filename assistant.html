@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Assistant | Flame in Freefall</title>
+<style>
+:root{
+ --bg:#050b18;--panel:#101d32;
+ --line:#2b405d;--orange:#ff9b58;
+ --blue:#69d9ee;--muted:#b5c5d9
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:radial-gradient(
+ circle at 80% 0%,#183454,#050b18 60%);
+ color:#f2f6ff;font:15px/1.6 Arial,sans-serif
+}
+header{
+ padding:20px 7%;background:#091427;
+ border-bottom:1px solid var(--line);
+ display:flex;justify-content:space-between;
+ align-items:center;gap:15px;flex-wrap:wrap
+}
+.logo{color:var(--orange);font-weight:bold;text-decoration:none}
+nav{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+a{color:var(--blue)}
+nav a{color:#d0deed;text-decoration:none}
+select,button,textarea{
+ font:inherit;border-radius:9px
+}
+select{
+ background:#152842;color:white;
+ border:1px solid #45617d;padding:10px
+}
+main{max-width:1050px;margin:auto;padding:45px 18px}
+.tag{color:var(--blue);font-size:12px;letter-spacing:2px}
+h1{font-size:clamp(34px,5vw,55px);margin:12px 0}
+.lead{color:var(--muted);max-width:780px}
+.chat{
+ margin-top:30px;background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:17px;overflow:hidden
+}
+.chat-head{
+ padding:18px 22px;border-bottom:1px solid var(--line);
+ display:flex;align-items:center;gap:12px
+}
+.avatar{
+ background:#243d5e;border-radius:50%;
+ width:42px;height:42px;display:grid;
+ place-items:center;font-size:23px
+}
+.online{color:#7ce0bc;font-size:12px}
+.messages{
+ height:420px;overflow-y:auto;padding:22px;
+ display:flex;flex-direction:column;gap:15px
+}
+.message{
+ max-width:85%;padding:13px 17px;
+ border-radius:13px;white-space:pre-wrap;
+ overflow-wrap:anywhere
+}
+.bot{
+ align-self:flex-start;background:#1b304d;
+ border:1px solid #34516f
+}
+.user{
+ align-self:flex-end;background:#713d2d;
+ border:1px solid #ad6945
+}
+.suggestions{
+ display:flex;flex-wrap:wrap;gap:9px;
+ padding:15px 20px;border-top:1px solid var(--line)
+}
+button{
+ cursor:pointer;border:1px solid #46617e;
+ background:#1b304d;color:white;padding:10px 13px
+}
+button:hover{border-color:var(--orange)}
+.suggestions button{font-size:12px}
+.input-area{
+ display:flex;gap:10px;padding:17px 20px;
+ border-top:1px solid var(--line)
+}
+textarea{
+ flex:1;resize:vertical;min-height:48px;
+ max-height:150px;background:#081628;
+ border:1px solid #405a78;color:white;padding:12px
+}
+.send{
+ background:var(--orange);color:#141923;
+ font-weight:bold;border:0
+}
+.info{
+ margin-top:25px;background:#14243a;
+ border-left:3px solid var(--orange);
+ padding:17px;border-radius:8px;color:var(--muted)
+}
+.sources{margin-top:25px}
+.sources a{display:block;margin:10px 0;overflow-wrap:anywhere}
+footer{
+ border-top:1px solid var(--line);
+ padding:25px 7%;color:#91a5bd;font-size:12px
+}
+@media(max-width:600px){
+ .messages{height:390px;padding:13px}
+ .message{max-width:95%}
+ .input-area{padding:12px}
+ .send{padding:10px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <a class="logo" href="index.html">✦ FLAME IN FREEFALL</a>
+ <nav>
+  <a href="index.html" id="home">Home</a>
+  <a href="data-analysis.html" id="dataLink">NASA Data</a>
+  <select id="language" onchange="changeLanguage(this.value)">
+   <option value="en">🇬🇧 English</option>
+   <option value="ru">🇷🇺 Русский</option>
+   <option value="kk">🇰🇿 Қазақша</option>
+  </select>
+ </nav>
+</header>
+
+<main>
+ <div class="tag">NASA SPACE APPS CHALLENGE</div>
+ <h1 id="title">AI Research Assistant</h1>
+ <p class="lead" id="intro">
+  Ask questions about microgravity combustion,
+  spacecraft fire safety and NASA research.
+ </p>
+
+ <div class="chat">
+  <div class="chat-head">
+   <div class="avatar">🤖</div>
+   <div>
+    <strong>Flame Intelligence</strong>
+    <div class="online" id="status">
+     ● Educational assistant
+    </div>
+   </div>
+  </div>
+
+  <div class="messages" id="messages"
+       role="log" aria-live="polite"></div>
+
+  <div class="suggestions" id="suggestions"></div>
+
+  <div class="input-area">
+   <textarea id="question" rows="2"
+    aria-label="Your question"
+    placeholder="Ask a scientific question..."></textarea>
+   <button class="send" id="sendButton"
+    onclick="sendMessage()">Send ➤</button>
+  </div>
+ </div>
+
+ <div class="info" id="disclaimer">
+  This assistant uses a predefined educational
+  knowledge base. It does not generate new
+  scientific findings or provide certified
+  fire safety assessments.
+ </div>
+
+ <section class="sources">
+  <h2 id="sourcesTitle">Scientific Sources</h2>
+  <a target="_blank" rel="noopener"
+   href="https://www.nasa.gov/wp-content/uploads/2025/07/flame-extinguishment-experiment-flex.pdf">
+   NASA — FLEX Experiment
+  </a>
+  <a target="_blank" rel="noopener"
+   href="https://www.nasa.gov/wp-content/uploads/2025/07/burning-and-suppression-of-solids-bass.pdf">
+   NASA — BASS Experiment
+  </a>
+  <a target="_blank" rel="noopener"
+   href="https://www.americanscientist.org/article/fire-in-microgravity">
+   American Scientist — Fire in Microgravity
+  </a>
+  <a target="_blank" rel="noopener"
+   href="https://www.sciencedirect.com/science/article/abs/pii/S0010218017300846">
+   Combustion and Flame — Research Article
+  </a>
+  <a target="_blank" rel="noopener"
+   href="https://hightech.fm/2023/09/29/tiangong-fire-microgravity">
+   Hightech — Fire in Microgravity
+  </a>
+ </section>
+</main>
+
+<footer>
+ FLAME IN FREEFALL · NASA SPACE APPS CHALLENGE
+</footer>
+
+<script>
+const ui={
+ en:{
+  home:"Home",dataLink:"NASA Data",
+  title:"AI Research Assistant",
+  intro:"Ask questions about microgravity combustion, spacecraft fire safety and NASA research.",
+  status:"● Educational assistant",
+  welcome:"Hello! I am Flame Intelligence. Ask me about gravity, oxygen, ventilation, FLEX, BASS-II or fire safety in space.",
+  placeholder:"Ask a scientific question...",
+  sendButton:"Send ➤",
+  disclaimer:"This assistant uses a predefined educational knowledge base. It does not generate new scientific findings or provide certified fire safety assessments.",
+  sourcesTitle:"Scientific Sources",
+  suggestions:[
+   "What is microgravity?",
+   "What is FLEX?",
+   "What is BASS-II?",
+   "How does oxygen affect fire?"
+  ],
+  unknown:"I don't have a verified answer to that question in my knowledge base. Try asking about microgravity, oxygen, ventilation, FLEX, BASS-II or spacecraft fire safety."
+ },
+ ru:{
+  home:"Главная",dataLink:"Данные NASA",
+  title:"Научный ИИ-ассистент",
+  intro:"Задавайте вопросы о горении в микрогравитации, пожарной безопасности и исследованиях NASA.",
+  status:"● Учебный помощник",
+  welcome:"Здравствуйте! Я Flame Intelligence. Спросите меня о гравитации, кислороде, вентиляции, FLEX, BASS-II или пожарной безопасности в космосе.",
+  placeholder:"Задайте научный вопрос...",
+  sendButton:"Отправить ➤",
+  disclaimer:"Помощник использует заранее подготовленную базу научных объяснений. Он не создаёт новые научные результаты и не выполняет сертифицированную оценку пожарной безопасности.",
+  sourcesTitle:"Научные источники",
+  suggestions:[
+   "Что такое микрогравитация?",
+   "Что такое FLEX?",
+   "Что такое BASS-II?",
+   "Как кислород влияет на огонь?"
+  ],
+  unknown:"В моей базе нет проверенного ответа на этот вопрос. Попробуйте спросить о микрогравитации, кислороде, вентиляции, FLEX, BASS-II или пожарной безопасности."
+ },
+ kk:{
+  home:"Басты бет",dataLink:"NASA деректері",
+  title:"Ғылыми ЖИ көмекшісі",
+  intro:"Микрогравитациядағы жану, өрт қауіпсіздігі және NASA зерттеулері туралы сұрақ қойыңыз.",
+  status:"● Оқу көмекшісі",
+  welcome:"Сәлеметсіз бе! Мен Flame Intelligence көмекшісімін. Гравитация, оттегі, желдету, FLEX, BASS-II немесе ғарыштағы өрт қауіпсіздігі туралы сұраңыз.",
+  placeholder:"Ғылыми сұрақ қойыңыз...",
+  sendButton:"Жіберу ➤",
+  disclaimer:"Көмекші алдын ала дайындалған ғылыми түсіндірмелер базасын пайдаланады. Ол жаңа ғылыми нәтижелер жасамайды және сертификатталған өрт қауіпсіздігі бағасын бермейді.",
+  sourcesTitle:"Ғылыми дереккөздер",
+  suggestions:[
+   "Микрогравитация деген не?",
+   "FLEX деген не?",
+   "BASS-II деген не?",
+   "Оттегі өртке қалай әсер етеді?"
+  ],
+  unknown:"Менің базамда бұл сұраққа тексерілген жауап жоқ. Микрогравитация, оттегі, желдету, FLEX, BASS-II немесе өрт қауіпсіздігі туралы сұраңыз."
+ }
+};
+
+const knowledge={
+ gravity:{
+  terms:["gravity","microgravity","невесом","гравитац","салмақсыз","гравитация"],
+  en:"Microgravity is a condition in which objects experience very small apparent weight. Buoyancy-driven convection is greatly reduced, so some diffusion flames can become more spherical. Forced airflow can still strongly affect their shape.",
+  ru:"Микрогравитация — состояние очень малого кажущегося веса. Конвекция, вызванная плавучестью, значительно ослаблена, поэтому некоторые диффузионные пламена могут становиться более сферическими. Принудительная вентиляция по-прежнему влияет на их форму.",
+  kk:"Микрогравитация — денелердің көрінерлік салмағы өте аз болатын жағдай. Қалқымалылық конвекциясы әлсірейді, сондықтан кейбір диффузиялық жалындар шар тәрізді болуы мүмкін. Мәжбүрлі ауа ағыны олардың пішініне әсер етеді."
+ },
+ flex:{
+  terms:["flex","flame extinguishment","капель","капли","тамшы"],
+  en:"FLEX stands for Flame Extinguishment Experiment. It investigates liquid fuel droplet combustion and flame extinction in microgravity. Its findings contribute to combustion science and spacecraft fire safety research.",
+  ru:"FLEX — Flame Extinguishment Experiment. Эксперимент исследует горение капель жидкого топлива и затухание пламени в микрогравитации. Результаты помогают развивать науку о горении и исследования пожарной безопасности.",
+  kk:"FLEX — Flame Extinguishment Experiment. Бұл тәжірибе микрогравитацияда сұйық отын тамшыларының жануы мен жалынның сөнуін зерттейді. Нәтижелер жану ғылымы мен өрт қауіпсіздігін зерттеуге көмектеседі."
+ },
+ bass:{
+  terms:["bass","solid","твёрд","тверд","қатты материал"],
+  en:"BASS and BASS-II investigate burning and flame spread over solid materials in microgravity, including the effects of airflow. The experimental conditions matter when interpreting the results.",
+  ru:"BASS и BASS-II изучают горение и распространение пламени по твёрдым материалам в микрогравитации, включая влияние воздушного потока. Для интерпретации результатов необходимо учитывать условия каждого эксперимента.",
+  kk:"BASS және BASS-II микрогравитацияда қатты материалдардың жануы мен жалынның таралуын, соның ішінде ауа ағынының әсерін зерттейді. Нәтижелерді түсіндіру үшін тәжірибе шарттарын ескеру қажет."
+ },
+ oxygen:{
+  terms:["oxygen","кислород","оттег","o2","o₂"],
+  en:"Oxygen is an oxidizer that supports many combustion reactions. Its concentration can influence ignition and flame spread, together with pressure, fuel properties and airflow. The effect cannot be predicted reliably from oxygen percentage alone.",
+  ru:"Кислород — окислитель, поддерживающий многие реакции горения. Его концентрация может влиять на воспламенение и распространение пламени вместе с давлением, свойствами топлива и вентиляцией. Одного процента кислорода недостаточно для точного прогноза.",
+  kk:"Оттегі — көптеген жану реакцияларын қолдайтын тотықтырғыш. Оның концентрациясы қысыммен, отын қасиеттерімен және ауа ағынымен бірге тұтану мен жалын таралуына әсер етуі мүмкін. Тек оттегі пайызымен нақты болжам жасауға болмайды."
+ },
+ ventilation:{
+  terms:["ventilation","airflow","air flow","вентиляц","воздушн","желдет","ауа ағы"],
+  en:"Mechanical ventilation moves air through spacecraft. It can transport oxygen, heat, smoke and combustion products. Its influence on flame growth or extinction depends on the material and experimental conditions.",
+  ru:"Механическая вентиляция перемещает воздух внутри космического аппарата. Она переносит кислород, тепло, дым и продукты горения. Её влияние на развитие или затухание пламени зависит от материала и условий эксперимента.",
+  kk:"Механикалық желдету ғарыш аппаратындағы ауаны қозғалтады. Ол оттегіні, жылуды, түтінді және жану өнімдерін тасымалдайды. Жалынның дамуына немесе сөнуіне әсері материал мен тәжірибе жағдайларына байланысты."
+ },
+ safety:{
+  terms:["safety","fire safety","пожар","безопасност","тушен","өрт","қауіпсіз"],
+  en:"Spacecraft fire safety combines material selection, prevention, detection, emergency procedures and suppression systems. Research such as FLEX and BASS improves understanding, but safety decisions require validated engineering methods.",
+  ru:"Пожарная безопасность космических аппаратов включает выбор материалов, профилактику, обнаружение пожара, аварийные процедуры и системы тушения. FLEX и BASS помогают изучать риски, но реальные решения требуют проверенных инженерных методов.",
+  kk:"Ғарыш аппараттарының өрт қауіпсіздігі материал таңдауды, алдын алуды, өртті анықтауды, төтенше жағдай рәсімдерін және сөндіру жүйелерін қамтиды. FLEX пен BASS тәуекелдерді түсінуге көмектеседі, бірақ нақты шешімдер тексерілген инженерлік әдістерді талап етеді."
+ },
+ data:{
+  terms:["data","dataset","co2","co₂","carbon monoxide","угарн","углекисл","данные","дерек","көмірқыш"],
+  en:"The Data & Analysis section contains a preliminary secondary BASS-II dataset with oxygen, carbon dioxide and carbon monoxide values. These entries require verification against original NASA records before scientific conclusions are drawn.",
+  ru:"В разделе Data & Analysis представлена предварительная вторичная выборка BASS-II со значениями кислорода, углекислого и угарного газов. Перед научными выводами данные необходимо сверить с оригинальными записями NASA.",
+  kk:"Data & Analysis бөлімінде оттегі, көмірқышқыл газы және көміртек тотығының мәндері бар алдын ала BASS-II деректер жиынтығы берілген. Ғылыми қорытынды жасамас бұрын оларды NASA түпнұсқаларымен салыстыру қажет."
+ }
+};
+
+let currentLang="en";
+
+function addMessage(text,who){
+ const box=document.getElementById("messages");
+ const item=document.createElement("div");
+ item.className="message "+who;
+ item.textContent=text;
+ box.appendChild(item);
+ box.scrollTop=box.scrollHeight;
+}
+
+function normalize(text){
+ return text.toLowerCase()
+  .normalize("NFKC")
+  .replace(/ё/g,"е")
+  .replace(/₂/g,"2")
+  .replace(/[^a-zа-яәіңғүұқөһ0-9\s-]/gi," ");
+}
+
+function getAnswer(question){
+ const q=normalize(question);
+ let best=null;
+ let bestScore=0;
+
+ for(const item of Object.values(knowledge)){
+  let score=0;
+  for(const term of item.terms){
+   if(q.includes(normalize(term)))score++;
+  }
+  if(score>bestScore){
+   bestScore=score;
+   best=item;
+  }
+ }
+ return best?best[currentLang]:ui[currentLang].unknown;
+}
+
+function sendMessage(){
+ const input=document.getElementById("question");
+ const question=input.value.trim();
+ if(!question)return;
+
+ addMessage(question,"user");
+ input.value="";
+ addMessage(getAnswer(question),"bot");
+}
+
+function renderSuggestions(){
+ const box=document.getElementById("suggestions");
+ box.replaceChildren();
+
+ ui[currentLang].suggestions.forEach(text=>{
+  const button=document.createElement("button");
+  button.textContent=text;
+  button.onclick=()=>{
+   document.getElementById("question").value=text;
+   sendMessage();
+  };
+  box.appendChild(button);
+ });
+}
+
+function changeLanguage(lang){
+ if(!ui[lang])lang="en";
+ currentLang=lang;
+ const t=ui[lang];
+
+ ["home","dataLink","title","intro","status",
+  "sendButton","disclaimer","sourcesTitle"].forEach(id=>{
+  document.getElementById(id).textContent=t[id];
+ });
+
+ document.getElementById("question").placeholder=t.placeholder;
+ document.getElementById("language").value=lang;
+ document.documentElement.lang=lang;
+
+ try{localStorage.setItem("siteLanguage",lang)}catch(e){}
+
+ document.getElementById("messages").replaceChildren();
+ addMessage(t.welcome,"bot");
+ renderSuggestions();
+}
+
+document.getElementById("question").addEventListener("keydown",e=>{
+ if(e.key==="Enter"&&!e.shiftKey){
+  e.preventDefault();
+  sendMessage();
+ }
+});
+
+let saved="en";
+try{saved=localStorage.getItem("siteLanguage")||"en"}catch(e){}
+changeLanguage(saved);
+</script>
+</body>
+</html>
