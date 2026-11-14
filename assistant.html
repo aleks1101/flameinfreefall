@@ -4,563 +4,390 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gemini AI Assistant | Flame in Freefall</title>
-
+<title>Flame Intelligence AI | Flame in Freefall</title>
 <style>
-:root {
-  --bg:#050b18;
-  --panel:#101d32;
-  --line:#2b405d;
-  --orange:#ff9b58;
-  --blue:#69d9ee;
-  --muted:#b5c5d9;
+:root{
+ --bg:#050b18;--panel:#101d32;--line:#2b405d;
+ --orange:#ff9b58;--blue:#69d9ee;--muted:#b5c5d9
 }
-* { box-sizing:border-box; }
-
-body {
-  margin:0;
-  background:radial-gradient(circle at 80% 0%,#183454,#050b18 60%);
-  color:#f2f6ff;
-  font:15px/1.6 Arial,sans-serif;
+*{box-sizing:border-box}
+body{
+ margin:0;color:#f2f6ff;font:15px/1.6 Arial,sans-serif;
+ background:radial-gradient(circle at 80% 0%,#183454,#050b18 60%)
 }
-
-header {
-  padding:20px 7%;
-  background:#091427;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  flex-wrap:wrap;
+header{
+ padding:20px 7%;background:#091427;
+ border-bottom:1px solid var(--line);
+ display:flex;justify-content:space-between;
+ align-items:center;gap:15px;flex-wrap:wrap
 }
-
-.logo {
-  color:var(--orange);
-  font-weight:bold;
-  text-decoration:none;
+.logo{color:var(--orange);font-weight:bold;text-decoration:none}
+nav{display:flex;gap:15px;align-items:center;flex-wrap:wrap}
+nav a{color:#d0deed;text-decoration:none}
+select,button,textarea{font:inherit;border-radius:9px}
+select{
+ background:#152842;color:white;
+ border:1px solid #45617d;padding:10px
 }
-
-nav {
-  display:flex;
-  align-items:center;
-  gap:15px;
-  flex-wrap:wrap;
+main{max-width:1050px;margin:auto;padding:45px 18px}
+.tag{color:var(--blue);font-size:12px;letter-spacing:2px}
+h1{font-size:clamp(34px,5vw,55px);margin:12px 0}
+.lead{color:var(--muted);max-width:780px}
+.chat{
+ margin-top:30px;background:var(--panel);
+ border:1px solid var(--line);border-radius:17px;overflow:hidden
 }
-
-nav a {
-  color:#d0deed;
-  text-decoration:none;
+.chat-head{
+ padding:18px 22px;border-bottom:1px solid var(--line);
+ display:flex;align-items:center;gap:12px
 }
-
-select,button,textarea {
-  font:inherit;
-  border-radius:9px;
+.avatar{
+ background:#243d5e;border-radius:50%;
+ width:45px;height:45px;display:grid;place-items:center;font-size:24px
 }
-
-select {
-  background:#152842;
-  color:white;
-  border:1px solid #45617d;
-  padding:10px;
+.status{color:#7ce0bc;font-size:12px}
+.messages{
+ height:430px;overflow-y:auto;padding:22px;
+ display:flex;flex-direction:column;gap:15px
 }
-
-main {
-  max-width:1050px;
-  margin:auto;
-  padding:45px 18px;
+.message{
+ max-width:85%;padding:13px 17px;
+ border-radius:13px;white-space:pre-wrap;
+ overflow-wrap:anywhere
 }
-
-.tag {
-  color:var(--blue);
-  font-size:12px;
-  letter-spacing:2px;
+.bot{
+ align-self:flex-start;background:#1b304d;
+ border:1px solid #34516f
 }
-
-h1 {
-  font-size:clamp(34px,5vw,55px);
-  margin:12px 0;
+.user{
+ align-self:flex-end;background:#713d2d;
+ border:1px solid #ad6945
 }
-
-.lead {
-  color:var(--muted);
-  max-width:780px;
+.suggestions{
+ display:flex;flex-wrap:wrap;gap:9px;
+ padding:15px 20px;border-top:1px solid var(--line)
 }
-
-.chat {
-  margin-top:30px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:17px;
-  overflow:hidden;
+button{
+ cursor:pointer;border:1px solid #46617e;
+ background:#1b304d;color:white;padding:10px 13px
 }
-
-.chat-head {
-  padding:18px 22px;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  gap:12px;
+button:hover{border-color:var(--orange)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.suggestions button{font-size:12px}
+.input-area{
+ display:flex;gap:10px;padding:17px 20px;
+ border-top:1px solid var(--line)
 }
-
-.avatar {
-  background:#243d5e;
-  border-radius:50%;
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  font-size:23px;
+textarea{
+ flex:1;resize:vertical;min-height:48px;
+ max-height:150px;background:#081628;
+ border:1px solid #405a78;color:white;padding:12px
 }
-
-.online {
-  color:#7ce0bc;
-  font-size:12px;
+.send{
+ background:var(--orange);color:#141923;
+ font-weight:bold;border:0
 }
-
-.messages {
-  height:420px;
-  overflow-y:auto;
-  padding:22px;
-  display:flex;
-  flex-direction:column;
-  gap:15px;
+.info{
+ margin-top:25px;background:#14243a;
+ border-left:3px solid var(--orange);
+ padding:17px;border-radius:8px;color:var(--muted)
 }
-
-.message {
-  max-width:85%;
-  padding:13px 17px;
-  border-radius:13px;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
+.sources{margin-top:25px}
+.sources a{
+ display:block;margin:10px 0;
+ color:var(--blue);overflow-wrap:anywhere
 }
-
-.bot {
-  align-self:flex-start;
-  background:#1b304d;
-  border:1px solid #34516f;
+footer{
+ border-top:1px solid var(--line);
+ padding:25px 7%;color:#91a5bd;font-size:12px
 }
-
-.user {
-  align-self:flex-end;
-  background:#713d2d;
-  border:1px solid #ad6945;
-}
-
-.suggestions {
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  padding:15px 20px;
-  border-top:1px solid var(--line);
-}
-
-button {
-  cursor:pointer;
-  border:1px solid #46617e;
-  background:#1b304d;
-  color:white;
-  padding:10px 13px;
-}
-
-button:hover {
-  border-color:var(--orange);
-}
-
-button:disabled {
-  opacity:.5;
-  cursor:not-allowed;
-}
-
-.suggestions button {
-  font-size:12px;
-}
-
-.input-area {
-  display:flex;
-  gap:10px;
-  padding:17px 20px;
-  border-top:1px solid var(--line);
-}
-
-textarea {
-  flex:1;
-  resize:vertical;
-  min-height:48px;
-  max-height:150px;
-  background:#081628;
-  border:1px solid #405a78;
-  color:white;
-  padding:12px;
-}
-
-.send {
-  background:var(--orange);
-  color:#141923;
-  font-weight:bold;
-  border:0;
-}
-
-.info {
-  margin-top:25px;
-  background:#14243a;
-  border-left:3px solid var(--orange);
-  padding:17px;
-  border-radius:8px;
-  color:var(--muted);
-}
-
-.sources {
-  margin-top:25px;
-}
-
-.sources a {
-  display:block;
-  margin:10px 0;
-  color:var(--blue);
-  overflow-wrap:anywhere;
-}
-
-footer {
-  border-top:1px solid var(--line);
-  padding:25px 7%;
-  color:#91a5bd;
-  font-size:12px;
-}
-
-@media(max-width:600px) {
-  .messages {
-    height:390px;
-    padding:13px;
-  }
-  .message { max-width:95%; }
-  .input-area { padding:12px; }
-  .send { padding:10px; }
+@media(max-width:600px){
+ .messages{height:390px;padding:13px}
+ .message{max-width:95%}
+ .input-area{padding:12px}
+ .send{padding:10px}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <a class="logo" href="index.html">
-    ✦ FLAME IN FREEFALL
-  </a>
-
-  <nav>
-    <a href="index.html" id="home">Home</a>
-    <a href="data-analysis.html" id="dataLink">NASA Data</a>
-
-    <select id="language" aria-label="Select language">
-      <option value="en">🇬🇧 English</option>
-      <option value="ru">🇷🇺 Русский</option>
-      <option value="kk">🇰🇿 Қазақша</option>
-    </select>
-  </nav>
+ <a class="logo" href="index.html">✦ FLAME IN FREEFALL</a>
+ <nav>
+  <a href="index.html" id="home">Home</a>
+  <a href="data-analysis.html" id="dataLink">NASA Data</a>
+  <select id="language" aria-label="Select language">
+   <option value="en">🇬🇧 English</option>
+   <option value="ru">🇷🇺 Русский</option>
+   <option value="kk">🇰🇿 Қазақша</option>
+  </select>
+ </nav>
 </header>
 
 <main>
-  <div class="tag">NASA SPACE APPS CHALLENGE</div>
+ <div class="tag">NASA SPACE APPS CHALLENGE</div>
+ <h1 id="title">Gemini AI Research Assistant</h1>
+ <p class="lead" id="intro">
+  Explore microgravity combustion, NASA experiments
+  and spacecraft fire safety with Gemini AI.
+ </p>
 
-  <h1 id="title">Gemini AI Research Assistant</h1>
-
-  <p class="lead" id="intro">
-    Ask Gemini about microgravity combustion,
-    spacecraft fire safety and NASA experiments.
-  </p>
-
-  <div class="chat">
-
-    <div class="chat-head">
-      <div class="avatar">🤖</div>
-      <div>
-        <strong>Flame Intelligence AI</strong>
-        <div class="online" id="status">
-          ● Powered by Gemini API
-        </div>
-      </div>
-    </div>
-
-    <div class="messages" id="messages"
-         role="log" aria-live="polite"></div>
-
-    <div class="suggestions" id="suggestions"></div>
-
-    <div class="input-area">
-      <textarea
-        id="question"
-        rows="2"
-        maxlength="2000"
-        aria-label="Your question"
-        placeholder="Ask Gemini a question..."></textarea>
-
-      <button class="send" id="sendButton">
-        Send ➤
-      </button>
-    </div>
-
+ <div class="chat">
+  <div class="chat-head">
+   <div class="avatar">🤖</div>
+   <div>
+    <strong>Flame Intelligence AI</strong>
+    <div class="status" id="status">● Gemini AI</div>
+   </div>
   </div>
 
-  <div class="info" id="disclaimer">
-    Gemini generates responses using AI.
-    Answers may contain mistakes and should be
-    verified against scientific sources.
+  <div class="messages" id="messages"
+       role="log" aria-live="polite"></div>
+
+  <div class="suggestions" id="suggestions"></div>
+
+  <div class="input-area">
+   <textarea id="question" rows="2" maxlength="2000"
+     placeholder="Ask Gemini a question..."
+     aria-label="Your question"></textarea>
+   <button class="send" id="sendButton">Send ➤</button>
   </div>
+ </div>
 
-  <section class="sources">
-    <h2 id="sourcesTitle">Scientific Sources</h2>
+ <div class="info" id="disclaimer">
+  AI-generated answers may contain mistakes.
+  Verify scientific claims using original sources.
+ </div>
 
-    <a target="_blank" rel="noopener noreferrer"
-       href="https://www.nasa.gov/wp-content/uploads/2025/07/flame-extinguishment-experiment-flex.pdf">
-       NASA — FLEX Experiment
-    </a>
+ <section class="sources">
+  <h2 id="sourcesTitle">Scientific Sources</h2>
 
-    <a target="_blank" rel="noopener noreferrer"
-       href="https://www.nasa.gov/wp-content/uploads/2025/07/burning-and-suppression-of-solids-bass.pdf">
-       NASA — BASS Experiment
-    </a>
+  <a href="https://www.nasa.gov/wp-content/uploads/2025/07/flame-extinguishment-experiment-flex.pdf"
+     target="_blank" rel="noopener noreferrer">
+   NASA — FLEX Experiment
+  </a>
 
-    <a target="_blank" rel="noopener noreferrer"
-       href="https://www.americanscientist.org/article/fire-in-microgravity">
-       American Scientist — Fire in Microgravity
-    </a>
+  <a href="https://www.nasa.gov/wp-content/uploads/2025/07/burning-and-suppression-of-solids-bass.pdf"
+     target="_blank" rel="noopener noreferrer">
+   NASA — BASS Experiment
+  </a>
 
-    <a target="_blank" rel="noopener noreferrer"
-       href="https://www.sciencedirect.com/science/article/abs/pii/S0010218017300846">
-       Combustion and Flame — Research Article
-    </a>
-  </section>
+  <a href="https://www.americanscientist.org/article/fire-in-microgravity"
+     target="_blank" rel="noopener noreferrer">
+   American Scientist — Fire in Microgravity
+  </a>
+
+  <a href="https://www.sciencedirect.com/science/article/abs/pii/S0010218017300846"
+     target="_blank" rel="noopener noreferrer">
+   Combustion and Flame — Research Article
+  </a>
+ </section>
 </main>
 
 <footer>
-  FLAME IN FREEFALL · NASA SPACE APPS CHALLENGE
+ FLAME IN FREEFALL · NASA SPACE APPS CHALLENGE
 </footer>
 
 <script>
 const GEMINI_URL =
-  "https://flame-ai-assistant.sashatuluaeva2022.workers.dev/";
+ "https://flame-gemini-v2.sashatuluaeva2022.workers.dev/";
 
-const ui = {
-  en: {
-    home:"Home",
-    dataLink:"NASA Data",
-    title:"Gemini AI Research Assistant",
-    intro:"Ask Gemini about microgravity combustion, spacecraft fire safety and NASA experiments.",
-    status:"● Gemini AI Assistant",
-    welcome:"Hello! I am Flame Intelligence, powered by Gemini. Ask me about microgravity, FLEX, BASS-II, oxygen, ventilation or space fire safety.",
-    placeholder:"Ask Gemini a question...",
-    send:"Send ➤",
-    waiting:"Gemini is thinking...",
-    error:"Could not connect to Gemini. Check the Cloudflare Worker and API settings.",
-    disclaimer:"Gemini generates responses using AI. Answers may contain mistakes and should be verified against scientific sources. NASA files are not automatically accessible to Gemini.",
-    sourcesTitle:"Scientific Sources",
-    suggestions:[
-      "What is microgravity?",
-      "What is NASA FLEX?",
-      "What is BASS-II?",
-      "How does oxygen affect fire?"
-    ]
-  },
-
-  ru: {
-    home:"Главная",
-    dataLink:"Данные NASA",
-    title:"Научный ИИ-ассистент Gemini",
-    intro:"Задавайте Gemini вопросы о горении в микрогравитации, пожарной безопасности и экспериментах NASA.",
-    status:"● ИИ-ассистент Gemini",
-    welcome:"Здравствуйте! Я Flame Intelligence на базе Gemini. Спросите меня о микрогравитации, FLEX, BASS-II, кислороде, вентиляции или пожарной безопасности.",
-    placeholder:"Задайте вопрос Gemini...",
-    send:"Отправить ➤",
-    waiting:"Gemini думает...",
-    error:"Не удалось подключиться к Gemini. Проверьте Cloudflare Worker и настройки API.",
-    disclaimer:"Gemini генерирует ответы с помощью ИИ. Возможны ошибки, поэтому научные утверждения необходимо проверять по первоисточникам. Файлы NASA не подключаются к Gemini автоматически.",
-    sourcesTitle:"Научные источники",
-    suggestions:[
-      "Что такое микрогравитация?",
-      "Что исследует NASA FLEX?",
-      "Что такое BASS-II?",
-      "Как кислород влияет на огонь?"
-    ]
-  },
-
-  kk: {
-    home:"Басты бет",
-    dataLink:"NASA деректері",
-    title:"Gemini ғылыми ЖИ көмекшісі",
-    intro:"Gemini жүйесіне микрогравитациядағы жану, өрт қауіпсіздігі және NASA тәжірибелері туралы сұрақ қойыңыз.",
-    status:"● Gemini ЖИ көмекшісі",
-    welcome:"Сәлеметсіз бе! Мен Gemini негізіндегі Flame Intelligence көмекшісімін. Микрогравитация, FLEX, BASS-II, оттегі және өрт қауіпсіздігі туралы сұраңыз.",
-    placeholder:"Gemini жүйесіне сұрақ қойыңыз...",
-    send:"Жіберу ➤",
-    waiting:"Gemini ойланып жатыр...",
-    error:"Gemini жүйесіне қосылу мүмкін болмады. Cloudflare Worker мен API параметрлерін тексеріңіз.",
-    disclaimer:"Gemini жасанды интеллект көмегімен жауап береді. Қателер болуы мүмкін, сондықтан ғылыми мәліметтерді бастапқы дереккөздермен тексеру қажет. NASA файлдары Gemini жүйесіне автоматты түрде қосылмайды.",
-    sourcesTitle:"Ғылыми дереккөздер",
-    suggestions:[
-      "Микрогравитация деген не?",
-      "NASA FLEX нені зерттейді?",
-      "BASS-II деген не?",
-      "Оттегі жануға қалай әсер етеді?"
-    ]
-  }
+const ui={
+ en:{
+  home:"Home",dataLink:"NASA Data",
+  title:"Gemini AI Research Assistant",
+  intro:"Explore microgravity combustion, NASA experiments and spacecraft fire safety with Gemini AI.",
+  status:"● Gemini AI",
+  welcome:"Hello! I'm Flame Intelligence. Ask me about NASA FLEX, BASS-II, microgravity, oxygen, ventilation or spacecraft fire safety.",
+  placeholder:"Ask Gemini a question...",
+  send:"Send ➤",
+  waiting:"Gemini is thinking...",
+  error:"Gemini is unavailable. Please check the connection.",
+  disclaimer:"AI-generated answers may contain mistakes. Verify scientific claims using original sources. NASA documents are not automatically connected to this chat.",
+  sourcesTitle:"Scientific Sources",
+  suggestions:[
+   "What is microgravity?",
+   "What is NASA FLEX?",
+   "How does oxygen affect fire?",
+   "Why is ventilation important in space?"
+  ]
+ },
+ ru:{
+  home:"Главная",dataLink:"Данные NASA",
+  title:"Научный ИИ-ассистент Gemini",
+  intro:"Исследуйте горение в микрогравитации, эксперименты NASA и пожарную безопасность вместе с Gemini AI.",
+  status:"● Gemini AI",
+  welcome:"Здравствуйте! Я Flame Intelligence. Спросите меня об экспериментах FLEX, BASS-II, микрогравитации, кислороде и пожарной безопасности.",
+  placeholder:"Задайте вопрос Gemini...",
+  send:"Отправить ➤",
+  waiting:"Gemini думает...",
+  error:"Gemini недоступен. Проверьте подключение.",
+  disclaimer:"Ответы ИИ могут содержать ошибки. Проверяйте научные утверждения по первоисточникам. Документы NASA не подключаются к этому чату автоматически.",
+  sourcesTitle:"Научные источники",
+  suggestions:[
+   "Что такое микрогравитация?",
+   "Что исследует NASA FLEX?",
+   "Как кислород влияет на огонь?",
+   "Почему вентиляция важна в космосе?"
+  ]
+ },
+ kk:{
+  home:"Басты бет",dataLink:"NASA деректері",
+  title:"Gemini ғылыми ЖИ көмекшісі",
+  intro:"Gemini AI көмегімен микрогравитациядағы жануды, NASA тәжірибелерін және өрт қауіпсіздігін зерттеңіз.",
+  status:"● Gemini AI",
+  welcome:"Сәлеметсіз бе! Мен Flame Intelligence көмекшісімін. FLEX, BASS-II, микрогравитация, оттегі және өрт қауіпсіздігі туралы сұраңыз.",
+  placeholder:"Gemini жүйесіне сұрақ қойыңыз...",
+  send:"Жіберу ➤",
+  waiting:"Gemini ойланып жатыр...",
+  error:"Gemini қолжетімсіз. Қосылымды тексеріңіз.",
+  disclaimer:"ЖИ жауаптарында қателер болуы мүмкін. Ғылыми тұжырымдарды бастапқы дереккөздерден тексеріңіз. NASA құжаттары бұл чатқа автоматты түрде қосылмайды.",
+  sourcesTitle:"Ғылыми дереккөздер",
+  suggestions:[
+   "Микрогравитация деген не?",
+   "NASA FLEX нені зерттейді?",
+   "Оттегі жануға қалай әсер етеді?",
+   "Ғарышта желдету неге маңызды?"
+  ]
+ }
 };
 
 let currentLang="en";
 let busy=false;
 
-function addMessage(text,who) {
-  const messages=document.getElementById("messages");
-  const item=document.createElement("div");
-
-  item.className="message "+who;
-  item.textContent=text;
-
-  messages.appendChild(item);
-  messages.scrollTop=messages.scrollHeight;
-
-  return item;
+function addMessage(text,who){
+ const box=document.getElementById("messages");
+ const item=document.createElement("div");
+ item.className="message "+who;
+ item.textContent=text;
+ box.appendChild(item);
+ box.scrollTop=box.scrollHeight;
+ return item;
 }
 
-async function getAnswer(question) {
-  const controller=new AbortController();
-  const timeout=setTimeout(()=>controller.abort(),30000);
+async function getAnswer(question){
+ const controller=new AbortController();
+ const timeout=setTimeout(()=>controller.abort(),30000);
 
-  try {
-    const response=await fetch(GEMINI_URL,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({question}),
-      signal:controller.signal
-    });
-
-    const data=await response.json().catch(()=>({}));
-
-    if(!response.ok) {
-      throw new Error(
-        data.error || "HTTP "+response.status
-      );
-    }
-
-    if(typeof data.answer!=="string" ||
-       !data.answer.trim()) {
-      throw new Error("Empty Gemini response");
-    }
-
-    return data.answer;
-
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-async function sendMessage() {
-  if(busy)return;
-
-  const input=document.getElementById("question");
-  const button=document.getElementById("sendButton");
-  const question=input.value.trim();
-
-  if(!question)return;
-
-  busy=true;
-  button.disabled=true;
-  input.disabled=true;
-
-  addMessage(question,"user");
-  input.value="";
-
-  const waiting=addMessage(
-    ui[currentLang].waiting,"bot"
-  );
-
-  try {
-    const answer=await getAnswer(question);
-    waiting.textContent=answer;
-  } catch(error) {
-    waiting.textContent=
-      ui[currentLang].error+
-      "\n\n"+error.message;
-    console.error("Gemini error:",error);
-  } finally {
-    busy=false;
-    button.disabled=false;
-    input.disabled=false;
-    input.focus();
-  }
-}
-
-function renderSuggestions() {
-  const box=document.getElementById("suggestions");
-  box.replaceChildren();
-
-  ui[currentLang].suggestions.forEach(text=>{
-    const button=document.createElement("button");
-    button.textContent=text;
-
-    button.onclick=()=>{
-      document.getElementById("question").value=text;
-      sendMessage();
-    };
-
-    box.appendChild(button);
+ try{
+  const response=await fetch(GEMINI_URL,{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({question}),
+   signal:controller.signal
   });
-}
 
-function changeLanguage(lang) {
-  if(!ui[lang])lang="en";
-  currentLang=lang;
-  const t=ui[lang];
+  const data=await response.json().catch(()=>({}));
 
-  document.getElementById("home").textContent=t.home;
-  document.getElementById("dataLink").textContent=t.dataLink;
-  document.getElementById("title").textContent=t.title;
-  document.getElementById("intro").textContent=t.intro;
-  document.getElementById("status").textContent=t.status;
-  document.getElementById("question").placeholder=t.placeholder;
-  document.getElementById("sendButton").textContent=t.send;
-  document.getElementById("disclaimer").textContent=t.disclaimer;
-  document.getElementById("sourcesTitle").textContent=t.sourcesTitle;
-  document.getElementById("language").value=lang;
-
-  document.documentElement.lang=lang;
-
-  try {
-    localStorage.setItem("siteLanguage",lang);
-  } catch(e) {}
-
-  const messages=document.getElementById("messages");
-  if(messages.children.length===0) {
-    addMessage(t.welcome,"bot");
+  if(!response.ok){
+   const details=data.upstreamStatus
+     ? " (Gemini HTTP "+data.upstreamStatus+")"
+     : "";
+   throw new Error(
+     (data.error||"HTTP "+response.status)+details
+   );
   }
 
-  renderSuggestions();
+  if(typeof data.answer!=="string"||!data.answer.trim()){
+   throw new Error("Empty response");
+  }
+
+  return data.answer;
+ }finally{
+  clearTimeout(timeout);
+ }
+}
+
+async function sendMessage(){
+ if(busy)return;
+
+ const input=document.getElementById("question");
+ const button=document.getElementById("sendButton");
+ const question=input.value.trim();
+
+ if(!question)return;
+
+ busy=true;
+ button.disabled=true;
+ input.disabled=true;
+
+ addMessage(question,"user");
+ input.value="";
+
+ const waiting=addMessage(ui[currentLang].waiting,"bot");
+
+ try{
+  waiting.textContent=await getAnswer(question);
+ }catch(error){
+  waiting.textContent=
+   ui[currentLang].error+"\n"+error.message;
+  console.error("Gemini request failed:",error);
+ }finally{
+  busy=false;
+  button.disabled=false;
+  input.disabled=false;
+  input.focus();
+ }
+}
+
+function renderSuggestions(){
+ const box=document.getElementById("suggestions");
+ box.replaceChildren();
+
+ ui[currentLang].suggestions.forEach(text=>{
+  const button=document.createElement("button");
+  button.textContent=text;
+  button.onclick=()=>{
+   document.getElementById("question").value=text;
+   sendMessage();
+  };
+  box.appendChild(button);
+ });
+}
+
+function changeLanguage(lang){
+ if(!ui[lang])lang="en";
+ currentLang=lang;
+ const t=ui[lang];
+
+ ["home","dataLink","title","intro",
+  "status","disclaimer","sourcesTitle"].forEach(id=>{
+   document.getElementById(id).textContent=t[id];
+  });
+
+ document.getElementById("question").placeholder=t.placeholder;
+ document.getElementById("sendButton").textContent=t.send;
+ document.getElementById("language").value=lang;
+ document.documentElement.lang=lang;
+
+ try{localStorage.setItem("siteLanguage",lang)}catch(e){}
+
+ if(document.getElementById("messages").children.length===0){
+  addMessage(t.welcome,"bot");
+ }
+
+ renderSuggestions();
 }
 
 document.getElementById("sendButton")
-  .addEventListener("click",sendMessage);
+ .addEventListener("click",sendMessage);
 
 document.getElementById("question")
-  .addEventListener("keydown",e=>{
-    if(e.key==="Enter"&&!e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
+ .addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!e.shiftKey){
+   e.preventDefault();
+   sendMessage();
+  }
+ });
 
 document.getElementById("language")
-  .addEventListener("change",e=>{
-    changeLanguage(e.target.value);
-  });
+ .addEventListener("change",e=>changeLanguage(e.target.value));
 
 let saved="en";
-try {
-  saved=localStorage.getItem("siteLanguage")||"en";
-} catch(e) {}
-
+try{
+ saved=localStorage.getItem("siteLanguage")||"en";
+}catch(e){}
 changeLanguage(saved);
 </script>
-
 </body>
 </html>
