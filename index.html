@@ -1,153 +1,185 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flame in Freefall | NASA Space Apps</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #080d1b;
-      color: white;
-    }
-
-    header {
-      padding: 25px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #263149;
-    }
-
-    .logo {
-      color: #ff9b42;
-      font-size: 21px;
-      font-weight: bold;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 20px;
-    }
-
-    .hero {
-      min-height: 80vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 70px 10%;
-      background: radial-gradient(circle at 80% 50%, #38213c, #080d1b 65%);
-    }
-
-    .tag {
-      color: #ffad59;
-      letter-spacing: 3px;
-      margin-bottom: 25px;
-    }
-
-    h1 {
-      font-size: clamp(40px, 7vw, 75px);
-      max-width: 850px;
-      margin-bottom: 25px;
-    }
-
-    .description {
-      color: #bdc8dc;
-      font-size: 19px;
-      line-height: 1.7;
-      max-width: 650px;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 35px;
-      padding: 15px 25px;
-      background: #ff8b39;
-      color: #101525;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      width: fit-content;
-    }
-
-    section {
-      padding: 65px 10%;
-    }
-
-    h2 {
-      color: #ffad59;
-      margin-bottom: 20px;
-      font-size: 30px;
-    }
-
-    section p {
-      color: #bdc8dc;
-      line-height: 1.8;
-      max-width: 750px;
-    }
-
-    footer {
-      padding: 25px;
-      text-align: center;
-      color: #8995aa;
-      border-top: 1px solid #263149;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flame in Freefall | NASA Space Apps</title>
+<style>
+* {box-sizing:border-box;margin:0;padding:0}
+body {
+  background:#050b18;
+  color:white;
+  font-family:Arial,sans-serif;
+  line-height:1.6;
+}
+header {
+  padding:22px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #24334b;
+}
+.logo {font-weight:bold;letter-spacing:2px;color:#ff9b52}
+nav a {color:#cbd5e1;text-decoration:none;margin-left:22px;font-size:14px}
+.hero {
+  min-height:570px;
+  padding:90px 8%;
+  display:flex;
+  align-items:center;
+  gap:45px;
+  background:radial-gradient(circle at 75% 40%,#17345a,#050b18 65%);
+}
+.hero-content {flex:1}
+.tag {color:#63d7ef;letter-spacing:3px;font-size:12px}
+h1 {font-size:clamp(44px,6vw,75px);line-height:1.05;margin:20px 0}
+h1 span {color:#ff914d}
+.hero p {color:#bdc9da;max-width:550px;font-size:17px}
+.hero img {
+  width:45%;
+  max-height:330px;
+  object-fit:cover;
+  border-radius:16px;
+  border:1px solid #48617e;
+}
+.btn {
+  display:inline-block;
+  margin-top:28px;
+  padding:13px 22px;
+  background:#ff914d;
+  color:#111827;
+  font-weight:bold;
+  text-decoration:none;
+  border-radius:7px;
+}
+section {padding:75px 8%}
+h2 {font-size:34px;margin:12px 0 20px}
+.subtitle {color:#63d7ef;letter-spacing:2px;font-size:12px}
+.description {color:#b9c6d8;max-width:850px}
+.cards {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-top:35px;
+}
+.card {
+  padding:25px;
+  background:#101d32;
+  border:1px solid #293d59;
+  border-radius:12px;
+  text-decoration:none;
+  color:white;
+  transition:.2s;
+}
+.card:hover {transform:translateY(-5px);border-color:#ff914d}
+.icon {font-size:30px;margin-bottom:15px}
+.card p {font-size:13px;color:#aab8ca;margin:12px 0}
+.card strong {color:#ffad75;font-size:13px}
+footer {
+  padding:30px 8%;
+  border-top:1px solid #293d59;
+  color:#8293aa;
+  font-size:12px;
+}
+@media(max-width:850px) {
+  .hero {flex-direction:column;align-items:flex-start;padding-top:60px}
+  .hero img {width:100%}
+  .cards {grid-template-columns:repeat(2,1fr)}
+  nav a {margin-left:10px}
+}
+@media(max-width:520px) {
+  header {flex-direction:column;gap:12px}
+  .cards {grid-template-columns:1fr}
+  section {padding:55px 7%}
+}
+</style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">FLAME IN FREEFALL</div>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#science">Science</a>
-    </nav>
-  </header>
+<header>
+  <div class="logo">✦ FLAME IN FREEFALL</div>
+  <nav>
+    <a href="#problem">The Challenge</a>
+    <a href="#explore">Explore</a>
+  </nav>
+</header>
 
-  <main>
-    <div class="hero">
-      <div class="tag">NASA SPACE APPS CHALLENGE</div>
-      <h1>What happens when fire meets space?</h1>
-      <p class="description">
-        Discover how flames behave in microgravity.
-        Explore NASA research, analyze combustion data
-        and investigate the future of fire safety in space.
-      </p>
-      <a class="button" href="#about">Explore the project</a>
-    </div>
+<main>
+<div class="hero">
+  <div class="hero-content">
+    <div class="tag">NASA SPACE APPS CHALLENGE PROJECT</div>
+    <h1>Flame in<br><span>Freefall</span></h1>
+    <p>
+      SI-Powered Fire Safety Insights from Microgravity
+      Combustion Data. Discover how fire behaves in space
+      and explore scientific solutions for safer future missions.
+    </p>
+    <a class="btn" href="#explore">Explore the Project →</a>
+  </div>
+  <img src="https://svs.gsfc.nasa.gov/vis/a010000/a011300/a011318/cover-1024.jpg"
+       alt="NASA microgravity flame experiment">
+</div>
 
-    <section id="about">
-      <h2>About the Challenge</h2>
-      <p>
-        Fire behaves differently in microgravity.
-        Understanding combustion in space is essential
-        for protecting astronauts during missions to the Moon
-        and Mars.
-      </p>
-    </section>
+<section id="problem">
+  <div class="subtitle">WHY THIS MATTERS</div>
+  <h2>Fire behaves differently in space.</h2>
+  <p class="description">
+    On Earth, gravity causes hot gases to rise and influences
+    the shape of a flame. In microgravity, this process changes.
+    Flames can become more spherical, and combustion products
+    behave differently. Fire detection and extinguishment can
+    therefore become more challenging.
+    <br><br>
+    As humans prepare to return to the Moon and travel to Mars,
+    understanding fire in spacecraft is essential for astronaut
+    safety. NASA experiments help researchers investigate
+    ignition, flame behavior and fire suppression in space.
+  </p>
+</section>
 
-    <section id="science">
-      <h2>Explore the Science</h2>
-      <p>
-        Our platform brings together NASA experiments,
-        scientific data, interactive simulations and
-        artificial intelligence to explore fire safety
-        beyond Earth.
-      </p>
-    </section>
-  </main>
+<section id="explore">
+  <div class="subtitle">DISCOVER OUR PLATFORM</div>
+  <h2>Explore the project</h2>
+  <p class="description">
+    Choose a section to investigate microgravity combustion
+    and discover new insights from space research.
+  </p>
 
-  <footer>
-    Flame in Freefall | NASA Space Apps Challenge
-  </footer>
+  <div class="cards">
+    <a class="card" href="simulator.html">
+      <div class="icon">🔥</div>
+      <h3>Fire Simulator</h3>
+      <p>Explore ignition and flame behavior under different conditions.</p>
+      <strong>OPEN SIMULATOR →</strong>
+    </a>
+
+    <a class="card" href="data-analysis.html">
+      <div class="icon">📊</div>
+      <h3>NASA Data & Analysis</h3>
+      <p>Analyze experimental data and discover scientific patterns.</p>
+      <strong>EXPLORE DATA →</strong>
+    </a>
+
+    <a class="card" href="information.html">
+      <div class="icon">🪐</div>
+      <h3>Project Information</h3>
+      <p>Learn about microgravity, combustion and NASA research.</p>
+      <strong>LEARN MORE →</strong>
+    </a>
+
+    <a class="card" href="assistant.html">
+      <div class="icon">🤖</div>
+      <h3>AI Assistant</h3>
+      <p>Ask questions about fire safety and combustion in space.</p>
+      <strong>ASK AI →</strong>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer>
+  FLAME IN FREEFALL · NASA SPACE APPS CHALLENGE
+  <br>Educational project based on NASA research.
+</footer>
 
 </body>
 </html>
