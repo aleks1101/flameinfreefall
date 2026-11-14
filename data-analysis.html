@@ -6,50 +6,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NASA Data & Analysis | Flame in Freefall</title>
 <style>
+:root{
+ --bg:#06101f;--panel:#102039;--line:#304563;
+ --text:#edf4ff;--muted:#b4c5d9;
+ --orange:#ff9b58;--blue:#6bdcf2
+}
 *{box-sizing:border-box}
 body{
- margin:0;background:#060e1d;color:#f2f6ff;
- font:16px/1.6 Arial,sans-serif
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,sans-serif;line-height:1.6
 }
 header{
- padding:20px 6%;background:#0c1b30;
+ padding:18px 6%;background:#0c1b30;
  display:flex;justify-content:space-between;
- align-items:center;gap:15px;flex-wrap:wrap
+ align-items:center;gap:16px;flex-wrap:wrap;
+ border-bottom:1px solid var(--line)
 }
-a{color:#79dcf4}
-.logo{color:#ff9b58;font-weight:bold}
-nav{display:flex;gap:15px;align-items:center;flex-wrap:wrap}
-select{
- background:#182d49;color:white;
- border:1px solid #46617e;
- padding:10px;border-radius:8px
+.logo{font-weight:bold;color:var(--orange);text-decoration:none}
+nav{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+a{color:var(--blue)}
+select,button{
+ background:#1b304e;color:white;border:1px solid #46617e;
+ border-radius:9px;padding:11px;font-size:14px;cursor:pointer
 }
-main{max-width:1150px;margin:auto;padding:50px 20px}
-h1{font-size:clamp(32px,5vw,55px);line-height:1.1}
-h2{color:#ffac72}
-p{color:#b9c9dd}
-.tag{color:#70d6ed;letter-spacing:2px}
+button.active{background:#a94e24;border-color:var(--orange)}
+main{max-width:1180px;margin:auto;padding:45px 20px}
+h1{font-size:clamp(34px,5vw,54px);line-height:1.1}
+h2{color:var(--orange);font-size:25px}
+h3{margin-bottom:8px}
+p{color:var(--muted)}
+.tag{color:var(--blue);letter-spacing:2px;font-size:12px}
 .grid{
- display:grid;grid-template-columns:repeat(2,1fr);
- gap:20px;margin:30px 0
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:20px;margin-top:30px
 }
 .card{
- background:#11223b;border:1px solid #304968;
- padding:25px;border-radius:15px
+ background:var(--panel);border:1px solid var(--line);
+ border-radius:15px;padding:24px;min-width:0
 }
-.card h3{color:#ffb27c}
 .full{grid-column:1/-1}
-canvas{width:100%;height:320px}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.chartbox{height:340px;position:relative}
+canvas{width:100%!important;height:100%!important}
 .note{
- background:#252c3b;border-left:3px solid #ffac72;
- padding:15px;border-radius:6px
+ background:#242b3a;border-left:3px solid var(--orange);
+ padding:14px;border-radius:6px;font-size:13px
 }
-.links a{display:block;margin:15px 0;overflow-wrap:anywhere}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{
+ padding:10px;border-bottom:1px solid #304563;
+ text-align:right;font-size:13px
+}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--blue)}
+.sources a{display:block;margin:12px 0;overflow-wrap:anywhere}
 footer{
- padding:25px;text-align:center;
- border-top:1px solid #304968;color:#91a6c0
+ text-align:center;color:#91a5bf;padding:25px;
+ border-top:1px solid var(--line)
 }
-@media(max-width:700px){
+@media(max-width:750px){
  .grid{grid-template-columns:1fr}
  .full{grid-column:auto}
 }
@@ -73,8 +89,8 @@ footer{
  <div class="tag">NASA SPACE APPS CHALLENGE</div>
  <h1 id="title">NASA Data & Analysis</h1>
  <p id="intro">
-  Explore microgravity combustion research,
-  experimental observations and scientific sources.
+  Explore microgravity combustion experiments,
+  gas measurements and scientific research.
  </p>
 
  <div class="grid">
@@ -82,9 +98,8 @@ footer{
    <h2>FLEX</h2>
    <h3>Flame Extinguishment Experiment</h3>
    <p id="flex">
-    FLEX investigates the combustion of liquid
-    fuel droplets in microgravity and explores
-    flame extinction under different conditions.
+    FLEX studies combustion of liquid fuel droplets
+    in microgravity and investigates flame extinction.
    </p>
   </section>
 
@@ -92,208 +107,300 @@ footer{
    <h2>BASS-II</h2>
    <h3>Burning and Suppression of Solids</h3>
    <p id="bass">
-    BASS-II investigates combustion and flame
-    spread over solid materials in microgravity,
-    including the influence of ventilation.
+    BASS-II examines combustion and flame spread
+    over solid materials in microgravity.
    </p>
   </section>
 
   <section class="card full">
-   <h2 id="chartTitle">Oxygen Measurements</h2>
-   <p id="chartDesc">
-    Initial and final oxygen values from the
-    provided BASS-II spreadsheet.
+   <h2 id="chartTitle">Interactive Gas Measurements</h2>
+   <p id="chartIntro">
+    Select a gas to compare initial and final values
+    from the provided BASS-II spreadsheet.
    </p>
-   <canvas id="oxygenChart" height="320"></canvas>
+   <div class="controls">
+    <button class="active" data-gas="o2"
+      onclick="selectGas('o2')">O₂</button>
+    <button data-gas="co2"
+      onclick="selectGas('co2')">CO₂</button>
+    <button data-gas="co"
+      onclick="selectGas('co')">CO</button>
+   </div>
+   <div class="chartbox">
+    <canvas id="chart"></canvas>
+   </div>
    <p class="note" id="warning">
-    Preliminary values from a secondary dataset.
-    These measurements require verification
-    against original NASA records.
+    Preliminary secondary dataset. Values require
+    verification against original NASA records.
    </p>
   </section>
 
+  <section class="card full">
+   <h2 id="tableTitle">Experimental Data</h2>
+   <p id="tableIntro">
+    Twenty available BASS-II records. Empty cells
+    indicate missing measurements.
+   </p>
+   <div class="tablewrap">
+    <table id="dataTable"></table>
+   </div>
+  </section>
+
   <section class="card">
-   <h2 id="analysisTitle">Scientific Analysis</h2>
+   <h2 id="analysisTitle">Scientific Interpretation</h2>
    <p id="analysis">
-    In microgravity, buoyancy-driven convection
-    is reduced. Diffusion and forced airflow
-    become especially important in determining
-    flame shape and combustion behavior.
+    Microgravity reduces buoyancy-driven convection.
+    Diffusion and forced airflow therefore play
+    important roles in flame behavior.
+    Gas measurements can help investigate combustion,
+    but interpretation requires experiment-specific
+    conditions and verified records.
    </p>
   </section>
 
   <section class="card">
    <h2 id="safetyTitle">Spacecraft Fire Safety</h2>
    <p id="safety">
-    Understanding ignition, flame spread and
-    extinguishment helps researchers develop
-    safer spacecraft materials and fire
-    protection strategies.
+    Research into ignition, flame spread and
+    extinguishment helps scientists improve
+    spacecraft fire protection.
    </p>
   </section>
 
-  <section class="card full links">
+  <section class="card full sources">
    <h2 id="sourcesTitle">Scientific Sources</h2>
 
-   <a href="https://www.sciencedirect.com/science/article/abs/pii/S0010218017300846" target="_blank" rel="noopener">
-    Combustion and Flame — Research Article
-   </a>
+   <a target="_blank" rel="noopener"
+   href="https://www.sciencedirect.com/science/article/abs/pii/S0010218017300846">
+   Combustion and Flame — Research Article</a>
 
-   <a href="https://www.americanscientist.org/article/fire-in-microgravity" target="_blank" rel="noopener">
-    American Scientist — Fire in Microgravity
-   </a>
+   <a target="_blank" rel="noopener"
+   href="https://www.americanscientist.org/article/fire-in-microgravity">
+   American Scientist — Fire in Microgravity</a>
 
-   <a href="https://www.nasa.gov/wp-content/uploads/2025/07/flame-extinguishment-experiment-flex.pdf?emrc=f75994" target="_blank" rel="noopener">
-    NASA — Flame Extinguishment Experiment (FLEX)
-   </a>
+   <a target="_blank" rel="noopener"
+   href="https://www.nasa.gov/wp-content/uploads/2025/07/flame-extinguishment-experiment-flex.pdf?emrc=f75994">
+   NASA — Flame Extinguishment Experiment (FLEX)</a>
 
-   <a href="https://www.nasa.gov/wp-content/uploads/2025/07/burning-and-suppression-of-solids-bass.pdf?emrc=3a5c2c" target="_blank" rel="noopener">
-    NASA — Burning and Suppression of Solids (BASS)
-   </a>
+   <a target="_blank" rel="noopener"
+   href="https://www.nasa.gov/wp-content/uploads/2025/07/burning-and-suppression-of-solids-bass.pdf?emrc=3a5c2c">
+   NASA — Burning and Suppression of Solids (BASS)</a>
 
-   <a href="https://hightech.fm/2023/09/29/tiangong-fire-microgravity" target="_blank" rel="noopener">
-    Hightech — Fire Research in Microgravity
-   </a>
+   <a target="_blank" rel="noopener"
+   href="https://hightech.fm/2023/09/29/tiangong-fire-microgravity">
+   Hightech — Fire Research in Microgravity</a>
   </section>
  </div>
 </main>
 
-<footer>
- FLAME IN FREEFALL · NASA SPACE APPS CHALLENGE
-</footer>
+<footer>FLAME IN FREEFALL · NASA SPACE APPS CHALLENGE</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 <script>
-const translations = {
+// Preliminary data transcribed from the supplied BASS-II table.
+// Columns: Test, O2 initial/final, CO2 initial/final,
+// CO initial/final. Null means missing.
+const records=[
+ ["B1",22.2,22.2,.44,.44,0,6],
+ ["B2",22.2,1.6,.44,null,6,null],
+ ["B3",22.2,21.8,.43,.49,12,19],
+ ["B4",22.2,22.2,.44,.51,-1,10],
+ ["B5",22.2,21.9,.43,.43,0,12],
+ ["B6",21,20.9,.33,.41,0,.3],
+ ["B7",22.2,22.1,.45,.51,1,17],
+ ["B8",21,20.5,.33,.58,0,131],
+ ["B9",21,20.9,.33,.35,0,10],
+ ["B10",21,20.8,.33,.44,0,23],
+ ["B11",21,20.7,.33,.47,0,46],
+ ["B12",22.2,22.1,.51,.56,17,33],
+ ["B13",21,20.5,.33,.65,0,61],
+ ["B14",15,null,0,null,.2,null],
+ ["B15",21,20.8,.33,.43,0,22],
+ ["B16",17.3,17.2,.47,.51,103,119],
+ ["B17",17.5,17.4,.2,.34,0,47],
+ ["B18",17.4,17.4,.34,.42,47,78],
+ ["B19",17.3,17.2,.51,.57,119,131],
+ ["B20",17.4,17.4,.42,.47,78,103]
+];
+
+const translations={
  en:{
-  home:"Home",
-  title:"NASA Data & Analysis",
-  intro:"Explore microgravity combustion research, experimental observations and scientific sources.",
-  flex:"FLEX investigates the combustion of liquid fuel droplets in microgravity and explores flame extinction under different conditions.",
-  bass:"BASS-II investigates combustion and flame spread over solid materials in microgravity, including the influence of ventilation.",
-  chartTitle:"Oxygen Measurements",
-  chartDesc:"Initial and final oxygen values from the provided BASS-II spreadsheet.",
-  warning:"Preliminary values from a secondary dataset. These measurements require verification against original NASA records.",
-  analysisTitle:"Scientific Analysis",
-  analysis:"In microgravity, buoyancy-driven convection is reduced. Diffusion and forced airflow become especially important in determining flame shape and combustion behavior.",
+  home:"Home",title:"NASA Data & Analysis",
+  intro:"Explore microgravity combustion experiments, gas measurements and scientific research.",
+  flex:"FLEX studies combustion of liquid fuel droplets in microgravity and investigates flame extinction.",
+  bass:"BASS-II examines combustion and flame spread over solid materials in microgravity.",
+  chartTitle:"Interactive Gas Measurements",
+  chartIntro:"Select a gas to compare initial and final values from the provided BASS-II spreadsheet.",
+  warning:"Preliminary secondary dataset. Values require verification against original NASA records. Unusual entries, including B2 oxygen and B4 CO, have not been corrected.",
+  tableTitle:"Experimental Data",
+  tableIntro:"Twenty available BASS-II records. Empty cells indicate missing measurements.",
+  analysisTitle:"Scientific Interpretation",
+  analysis:"Microgravity reduces buoyancy-driven convection. Diffusion and forced airflow therefore play important roles in flame behavior. Gas measurements can help investigate combustion, but interpretation requires experiment-specific conditions and verified records.",
   safetyTitle:"Spacecraft Fire Safety",
-  safety:"Understanding ignition, flame spread and extinguishment helps researchers develop safer spacecraft materials and fire protection strategies.",
+  safety:"Research into ignition, flame spread and extinguishment helps scientists improve spacecraft fire protection.",
   sourcesTitle:"Scientific Sources",
-  initial:"Initial O₂ (%)",
-  final:"Final O₂ (%)"
+  initial:"Initial",final:"Final",test:"Test"
  },
  ru:{
-  home:"Главная",
-  title:"Данные и анализ NASA",
-  intro:"Исследуйте горение в микрогравитации, экспериментальные наблюдения и научные источники.",
-  flex:"FLEX исследует горение капель жидкого топлива в микрогравитации и условия затухания пламени.",
-  bass:"BASS-II изучает горение и распространение пламени по твёрдым материалам в микрогравитации, включая влияние вентиляции.",
-  chartTitle:"Измерения кислорода",
-  chartDesc:"Начальные и конечные значения кислорода из предоставленной таблицы BASS-II.",
-  warning:"Предварительные значения из вторичного набора данных. Необходима сверка с оригинальными записями NASA.",
-  analysisTitle:"Научный анализ",
-  analysis:"В микрогравитации ослаблена конвекция, вызванная плавучестью. Диффузия и принудительный воздушный поток приобретают особое значение для формы пламени и процесса горения.",
+  home:"Главная",title:"Данные и анализ NASA",
+  intro:"Исследуйте эксперименты по горению в микрогравитации, измерения газов и научные материалы.",
+  flex:"FLEX изучает горение капель жидкого топлива в микрогравитации и условия затухания пламени.",
+  bass:"BASS-II исследует горение и распространение пламени по твёрдым материалам в микрогравитации.",
+  chartTitle:"Интерактивные графики газов",
+  chartIntro:"Выберите газ, чтобы сравнить начальные и конечные значения из предоставленной таблицы BASS-II.",
+  warning:"Предварительная вторичная выборка. Необходима сверка с оригинальными записями NASA. Необычные значения, включая кислород B2 и CO B4, не исправлялись.",
+  tableTitle:"Экспериментальные данные",
+  tableIntro:"20 доступных записей BASS-II. Пустые ячейки означают отсутствие измерений.",
+  analysisTitle:"Научная интерпретация",
+  analysis:"В микрогравитации ослаблена конвекция, вызванная плавучестью. Поэтому диффузия и принудительный воздушный поток особенно важны для поведения пламени. Для интерпретации измерений необходимы условия каждого эксперимента и проверенные исходные записи.",
   safetyTitle:"Пожарная безопасность космических аппаратов",
-  safety:"Изучение воспламенения, распространения и тушения пламени помогает разрабатывать более безопасные материалы и системы защиты космических аппаратов.",
+  safety:"Исследования воспламенения, распространения и тушения пламени помогают совершенствовать противопожарную защиту космических аппаратов.",
   sourcesTitle:"Научные источники",
-  initial:"Начальный O₂ (%)",
-  final:"Конечный O₂ (%)"
+  initial:"Начальный",final:"Конечный",test:"Опыт"
  },
  kk:{
-  home:"Басты бет",
-  title:"NASA деректері және талдау",
-  intro:"Микрогравитация жағдайындағы жануды, тәжірибелік бақылауларды және ғылыми дереккөздерді зерттеңіз.",
-  flex:"FLEX микрогравитациядағы сұйық отын тамшыларының жануын және жалынның сөну жағдайларын зерттейді.",
-  bass:"BASS-II микрогравитацияда қатты материалдардың жануын, жалынның таралуын және желдетудің әсерін зерттейді.",
-  chartTitle:"Оттегі өлшемдері",
-  chartDesc:"Ұсынылған BASS-II кестесіндегі оттегінің бастапқы және соңғы мәндері.",
-  warning:"Бұл екінші реттік деректер жиынтығынан алынған алдын ала мәндер. NASA-ның түпнұсқа жазбаларымен салыстыру қажет.",
-  analysisTitle:"Ғылыми талдау",
-  analysis:"Микрогравитацияда қалқымалылық әсерінен туындайтын конвекция әлсірейді. Диффузия мен мәжбүрлі ауа ағыны жалынның пішініне және жану процесіне маңызды әсер етеді.",
+  home:"Басты бет",title:"NASA деректері және талдау",
+  intro:"Микрогравитациядағы жану тәжірибелерін, газ өлшемдерін және ғылыми материалдарды зерттеңіз.",
+  flex:"FLEX микрогравитацияда сұйық отын тамшыларының жануын және жалынның сөнуін зерттейді.",
+  bass:"BASS-II микрогравитацияда қатты материалдардың жануын және жалынның таралуын зерттейді.",
+  chartTitle:"Газ өлшемдерінің интерактивті графиктері",
+  chartIntro:"BASS-II кестесіндегі бастапқы және соңғы мәндерді салыстыру үшін газды таңдаңыз.",
+  warning:"Бұл алдын ала алынған екінші реттік деректер. NASA түпнұсқаларымен тексеру қажет. B2 оттегі және B4 CO сияқты ерекше мәндер өзгертілмеген.",
+  tableTitle:"Тәжірибелік деректер",
+  tableIntro:"BASS-II бойынша қолжетімді 20 жазба. Бос ұяшықтар өлшемнің жоқ екенін білдіреді.",
+  analysisTitle:"Ғылыми түсіндіру",
+  analysis:"Микрогравитацияда қалқымалылықтан туындайтын конвекция әлсірейді. Сондықтан диффузия мен мәжбүрлі ауа ағыны жалынның әрекетіне маңызды әсер етеді. Өлшемдерді түсіндіру үшін әр тәжірибенің шарттары мен тексерілген бастапқы деректер қажет.",
   safetyTitle:"Ғарыш аппараттарының өрт қауіпсіздігі",
-  safety:"Тұтануды, жалынның таралуын және сөнуін зерттеу қауіпсіз материалдар мен қорғаныс жүйелерін әзірлеуге көмектеседі.",
+  safety:"Тұтануды, жалынның таралуын және сөнуін зерттеу ғарыш аппараттарының өрттен қорғанысын жетілдіруге көмектеседі.",
   sourcesTitle:"Ғылыми дереккөздер",
-  initial:"Бастапқы O₂ (%)",
-  final:"Соңғы O₂ (%)"
+  initial:"Бастапқы",final:"Соңғы",test:"Тәжірибе"
  }
 };
 
-const chartData = {
- labels:["B1","B2","B3","B4","B5","B6","B7","B8"],
- initial:[22.2,22.2,22.2,22.2,22.2,21,22.2,21],
- final:[22.2,1.6,21.8,22.2,21.9,20.9,22.1,20.5]
+let selectedGas="o2";
+let chart=null;
+let currentLang="en";
+const gasColumns={
+ o2:[1,2,"O₂ (%)"],
+ co2:[3,4,"CO₂ (%)"],
+ co:[5,6,"CO (ppm)"]
 };
 
-let oxygenChart;
+function formatValue(value){
+ return value===null?"—":String(value);
+}
 
-if(typeof Chart !== "undefined"){
- oxygenChart = new Chart(
-  document.getElementById("oxygenChart"),
-  {
-   type:"line",
-   data:{
-    labels:chartData.labels,
-    datasets:[
-     {
-      label:"Initial O₂ (%)",
-      data:chartData.initial,
-      borderColor:"#69d9ee",
-      backgroundColor:"#69d9ee",
-      tension:0.2
-     },
-     {
-      label:"Final O₂ (%)",
-      data:chartData.final,
-      borderColor:"#ff914d",
-      backgroundColor:"#ff914d",
-      tension:0.2
-     }
-    ]
-   },
-   options:{
-    responsive:true,
-    maintainAspectRatio:false,
-    scales:{
-     y:{
-      title:{display:true,text:"O₂ (%)"},
-      ticks:{color:"#b9c9dd"},
-      grid:{color:"#263b57"}
-     },
-     x:{
-      ticks:{color:"#b9c9dd"},
-      grid:{color:"#263b57"}
-     }
+function drawTable(){
+ const t=translations[currentLang];
+ const table=document.getElementById("dataTable");
+ const names=[
+  t.test,
+  t.initial+" O₂ (%)",t.final+" O₂ (%)",
+  t.initial+" CO₂ (%)",t.final+" CO₂ (%)",
+  t.initial+" CO (ppm)",t.final+" CO (ppm)"
+ ];
+ table.replaceChildren();
+ const head=document.createElement("thead");
+ const hr=document.createElement("tr");
+ names.forEach(name=>{
+  const th=document.createElement("th");
+  th.textContent=name;
+  hr.appendChild(th);
+ });
+ head.appendChild(hr);
+ table.appendChild(head);
+
+ const body=document.createElement("tbody");
+ records.forEach(row=>{
+  const tr=document.createElement("tr");
+  row.forEach(value=>{
+   const td=document.createElement("td");
+   td.textContent=formatValue(value);
+   tr.appendChild(td);
+  });
+  body.appendChild(tr);
+ });
+ table.appendChild(body);
+}
+
+function drawChart(){
+ const t=translations[currentLang];
+ const [a,b,unit]=gasColumns[selectedGas];
+ const ctx=document.getElementById("chart");
+ if(chart)chart.destroy();
+
+ if(typeof Chart==="undefined"){
+  ctx.style.display="none";
+  return;
+ }
+
+ chart=new Chart(ctx,{
+  type:"line",
+  data:{
+   labels:records.map(r=>r[0]),
+   datasets:[
+    {
+     label:t.initial+" "+unit,
+     data:records.map(r=>r[a]),
+     borderColor:"#69d9ee",
+     backgroundColor:"#69d9ee",
+     tension:.2,spanGaps:false
     },
-    plugins:{
-     legend:{labels:{color:"#f2f6ff"}}
+    {
+     label:t.final+" "+unit,
+     data:records.map(r=>r[b]),
+     borderColor:"#ff914d",
+     backgroundColor:"#ff914d",
+     tension:.2,spanGaps:false
+    }
+   ]
+  },
+  options:{
+   responsive:true,
+   maintainAspectRatio:false,
+   interaction:{mode:"index",intersect:false},
+   plugins:{
+    legend:{labels:{color:"#edf4ff"}}
+   },
+   scales:{
+    x:{
+     ticks:{color:"#b4c5d9",maxRotation:65},
+     grid:{color:"#253b56"}
+    },
+    y:{
+     title:{display:true,text:unit,color:"#edf4ff"},
+     ticks:{color:"#b4c5d9"},
+     grid:{color:"#253b56"}
     }
    }
   }
- );
+ });
+}
+
+function selectGas(gas){
+ selectedGas=gas;
+ document.querySelectorAll("[data-gas]").forEach(b=>{
+  b.classList.toggle("active",b.dataset.gas===gas);
+ });
+ drawChart();
 }
 
 function changeLanguage(lang){
  if(!translations[lang])lang="en";
+ currentLang=lang;
  const t=translations[lang];
-
  Object.keys(t).forEach(key=>{
-  const element=document.getElementById(key);
-  if(element)element.textContent=t[key];
+  const el=document.getElementById(key);
+  if(el)el.textContent=t[key];
  });
-
- if(oxygenChart){
-  oxygenChart.data.datasets[0].label=t.initial;
-  oxygenChart.data.datasets[1].label=t.final;
-  oxygenChart.update();
- }
-
  document.documentElement.lang=lang;
  document.getElementById("language").value=lang;
  localStorage.setItem("siteLanguage",lang);
+ drawTable();
+ drawChart();
 }
 
 changeLanguage(localStorage.getItem("siteLanguage")||"en");
 </script>
-
 </body>
 </html>
