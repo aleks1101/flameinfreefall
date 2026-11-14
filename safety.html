@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safety Insights | Flame in Freefall</title>
+<style>
+:root{
+ --bg:#050b18;--panel:#101d32;--line:#293d59;
+ --orange:#ff9b58;--blue:#69d9ee;
+ --text:#f1f6ff;--muted:#b7c6da
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:radial-gradient(circle at 80% 0%,#17345a,#050b18 55%);
+ color:var(--text);font-family:Arial,sans-serif;line-height:1.65
+}
+header{
+ display:flex;justify-content:space-between;align-items:center;
+ flex-wrap:wrap;gap:15px;padding:20px 7%;
+ background:#091427;border-bottom:1px solid var(--line)
+}
+.logo{color:var(--orange);font-weight:bold;text-decoration:none;letter-spacing:1px}
+nav{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+nav a{color:#cbd5e1;text-decoration:none}
+select{
+ background:#14243c;color:white;border:1px solid #48617e;
+ padding:10px;border-radius:8px
+}
+main{max-width:1180px;margin:auto;padding:55px 20px}
+.tag{color:var(--blue);font-size:12px;letter-spacing:2px}
+h1{font-size:clamp(36px,5vw,58px);line-height:1.1;margin:15px 0}
+h2{font-size:25px;color:var(--orange)}
+h3{font-size:19px;margin:10px 0}
+p{color:var(--muted)}
+.lead{max-width:850px;font-size:17px}
+.grid{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:20px;margin-top:35px
+}
+.card{
+ background:var(--panel);border:1px solid var(--line);
+ border-radius:15px;padding:25px
+}
+.icon{font-size:31px}
+.full{grid-column:1/-1}
+.note{
+ border-left:3px solid var(--orange);
+ background:#242d3d;padding:17px;
+ border-radius:8px;margin-top:20px;color:#e0e9f6
+}
+.sources a{
+ display:block;color:var(--blue);
+ margin:13px 0;overflow-wrap:anywhere
+}
+footer{
+ border-top:1px solid var(--line);
+ padding:30px 7%;color:#91a5bd;font-size:13px
+}
+@media(max-width:750px){
+ .grid{grid-template-columns:1fr}
+ .full{grid-column:auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <a class="logo" href="index.html">✦ FLAME IN FREEFALL</a>
+ <nav>
+  <a href="index.html" id="home">Home</a>
+  <a href="simulator.html" id="simLink">Simulator</a>
+  <select id="language" onchange="changeLanguage(this.value)">
+   <option value="en">🇬🇧 English</option>
+   <option value="ru">🇷🇺 Русский</option>
+   <option value="kk">🇰🇿 Қазақша</option>
+  </select>
+ </nav>
+</header>
+
+<main>
+ <div class="tag">NASA SPACE APPS CHALLENGE</div>
+ <h1 id="title">Safety Insights</h1>
+ <p class="lead" id="intro">
+  Explore the factors influencing fire safety in
+  spacecraft and the scientific research helping
+  protect astronauts during future missions.
+ </p>
+
+ <div class="grid">
+
+  <section class="card">
+   <div class="icon">🌌</div>
+   <h2 id="gravityTitle">Microgravity</h2>
+   <p id="gravityDesc">
+    In microgravity, buoyancy-driven convection is
+    strongly reduced. Hot gases do not rise in the
+    same way as on Earth. Flame shape and the movement
+    of combustion products can change, while ventilation
+    becomes especially important.
+   </p>
+  </section>
+
+  <section class="card">
+   <div class="icon">🫧</div>
+   <h2 id="oxygenTitle">Oxygen Concentration</h2>
+   <p id="oxygenDesc">
+    Oxygen supports combustion. Its concentration,
+    together with pressure, fuel properties and
+    environmental conditions, can influence ignition
+    and flame spread. A higher oxygen concentration
+    may increase fire hazards for some materials.
+   </p>
+  </section>
+
+  <section class="card">
+   <div class="icon">💨</div>
+   <h2 id="airTitle">Ventilation and Airflow</h2>
+   <p id="airDesc">
+    Spacecraft use mechanical ventilation to move
+    air. Airflow can transport oxygen, heat and smoke,
+    and can influence flame behavior. Its effects
+    depend on the material and experimental conditions.
+   </p>
+  </section>
+
+  <section class="card">
+   <div class="icon">🧯</div>
+   <h2 id="protectionTitle">Fire Protection</h2>
+   <p id="protectionDesc">
+    Spacecraft fire protection combines prevention,
+    material selection, detection, emergency procedures
+    and suppression systems. Fire safety must be
+    evaluated using validated engineering standards
+    and mission-specific requirements.
+   </p>
+  </section>
+
+  <section class="card">
+   <div class="icon">🧪</div>
+   <h2 id="researchTitle">NASA Combustion Research</h2>
+   <p id="researchDesc">
+    NASA experiments such as FLEX investigate liquid
+    fuel droplet combustion and flame extinction.
+    BASS investigations examine burning and flame
+    spread over solid materials in microgravity.
+    These studies help improve scientific understanding
+    of spacecraft fire hazards.
+   </p>
+  </section>
+
+  <section class="card">
+   <div class="icon">📊</div>
+   <h2 id="dataTitle">Data-Based Insights</h2>
+   <p id="dataDesc">
+    Measurements of oxygen, carbon dioxide and carbon
+    monoxide can provide information about experimental
+    conditions and combustion products. Reliable safety
+    conclusions require verified datasets, calibration
+    information and experiment-specific context.
+   </p>
+  </section>
+
+  <section class="card full">
+   <h2 id="recommendTitle">Key Safety Principles</h2>
+   <p id="recommendIntro">
+    Scientific research supports several general
+    principles for understanding spacecraft fire safety.
+   </p>
+   <div class="note">
+    <p id="principle1">
+     1. Study material flammability under relevant
+     atmospheric and airflow conditions.
+    </p>
+    <p id="principle2">
+     2. Consider the influence of ventilation on
+     flame spread and smoke transport.
+    </p>
+    <p id="principle3">
+     3. Use verified experimental data and validated
+     models when evaluating fire hazards.
+    </p>
+    <p id="principle4">
+     4. Treat educational simulations as visual
+     explanations, not certified safety predictions.
+    </p>
+   </div>
+  </section>
+
+  <section class="card full sources">
+   <h2 id="sourcesTitle">Scientific Sources</h2>
+   <p id="sourcesIntro">
+    Research materials and publications relevant
+    to combustion and fire safety in microgravity.
+   </p>
+
+   <a target="_blank" rel="noopener noreferrer"
+   href="https://www.sciencedirect.com/science/article/abs/pii/S0010218017300846">
+    Combustion and Flame — Scientific Article
+   </a>
+
+   <a target="_blank" rel="noopener noreferrer"
+   href="https://www.americanscientist.org/article/fire-in-microgravity">
+    American Scientist — Fire in Microgravity
+   </a>
+
+   <a target="_blank" rel="noopener noreferrer"
+   href="https://www.nasa.gov/wp-content/uploads/2025/07/flame-extinguishment-experiment-flex.pdf?emrc=f75994">
+    NASA — Flame Extinguishment Experiment (FLEX)
+   </a>
+
+   <a target="_blank" rel="noopener noreferrer"
+   href="https://www.nasa.gov/wp-content/uploads/2025/07/burning-and-suppression-of-solids-bass.pdf?emrc=3a5c2c">
+    NASA — Burning and Suppression of Solids (BASS)
+   </a>
+
+   <a target="_blank" rel="noopener noreferrer"
+   href="https://hightech.fm/2023/09/29/tiangong-fire-microgravity">
+    Hightech — Fire Research in Microgravity
+   </a>
+  </section>
+
+  <section class="card full">
+   <h2 id="disclaimerTitle">Scientific Limitations</h2>
+   <p id="disclaimer">
+    This page provides educational scientific information.
+    It does not replace spacecraft fire safety certification,
+    engineering analysis or operational procedures.
+    The simulator on this website is a conceptual
+    visualization and has not been validated as a
+    predictive fire safety model.
+   </p>
+  </section>
+
+ </div>
+</main>
+
+<footer>
+ FLAME IN FREEFALL · NASA SPACE APPS CHALLENGE
+</footer>
+
+<script>
+const translations={
+ en:{
+  home:"Home",simLink:"Simulator",
+  title:"Safety Insights",
+  intro:"Explore the factors influencing fire safety in spacecraft and the scientific research helping protect astronauts during future missions.",
+  gravityTitle:"Microgravity",
+  gravityDesc:"In microgravity, buoyancy-driven convection is strongly reduced. Hot gases do not rise in the same way as on Earth. Flame shape and the movement of combustion products can change, while ventilation becomes especially important.",
+  oxygenTitle:"Oxygen Concentration",
+  oxygenDesc:"Oxygen supports combustion. Its concentration, together with pressure, fuel properties and environmental conditions, can influence ignition and flame spread. A higher oxygen concentration may increase fire hazards for some materials.",
+  airTitle:"Ventilation and Airflow",
+  airDesc:"Spacecraft use mechanical ventilation to move air. Airflow can transport oxygen, heat and smoke, and can influence flame behavior. Its effects depend on the material and experimental conditions.",
+  protectionTitle:"Fire Protection",
+  protectionDesc:"Spacecraft fire protection combines prevention, material selection, detection, emergency procedures and suppression systems. Fire safety must be evaluated using validated engineering standards and mission-specific requirements.",
+  researchTitle:"NASA Combustion Research",
+  researchDesc:"NASA experiments such as FLEX investigate liquid fuel droplet combustion and flame extinction. BASS investigations examine burning and flame spread over solid materials in microgravity. These studies help improve scientific understanding of spacecraft fire hazards.",
+  dataTitle:"Data-Based Insights",
+  dataDesc:"Measurements of oxygen, carbon dioxide and carbon monoxide can provide information about experimental conditions and combustion products. Reliable safety conclusions require verified datasets, calibration information and experiment-specific context.",
+  recommendTitle:"Key Safety Principles",
+  recommendIntro:"Scientific research supports several general principles for understanding spacecraft fire safety.",
+  principle1:"1. Study material flammability under relevant atmospheric and airflow conditions.",
+  principle2:"2. Consider the influence of ventilation on flame spread and smoke transport.",
+  principle3:"3. Use verified experimental data and validated models when evaluating fire hazards.",
+  principle4:"4. Treat educational simulations as visual explanations, not certified safety predictions.",
+  sourcesTitle:"Scientific Sources",
+  sourcesIntro:"Research materials and publications relevant to combustion and fire safety in microgravity.",
+  disclaimerTitle:"Scientific Limitations",
+  disclaimer:"This page provides educational scientific information. It does not replace spacecraft fire safety certification, engineering analysis or operational procedures. The simulator on this website is a conceptual visualization and has not been validated as a predictive fire safety model."
+ },
+ ru:{
+  home:"Главная",simLink:"Симулятор",
+  title:"Пожарная безопасность в космосе",
+  intro:"Изучите факторы, влияющие на пожарную безопасность космических аппаратов, и исследования, помогающие защищать астронавтов.",
+  gravityTitle:"Микрогравитация",
+  gravityDesc:"В микрогравитации значительно ослаблена конвекция, вызванная плавучестью. Горячие газы не поднимаются так, как на Земле. Форма пламени и движение продуктов горения могут изменяться, а вентиляция приобретает особое значение.",
+  oxygenTitle:"Концентрация кислорода",
+  oxygenDesc:"Кислород поддерживает горение. Его концентрация вместе с давлением, свойствами топлива и условиями среды влияет на воспламенение и распространение пламени. Повышенная концентрация кислорода может увеличивать пожарную опасность некоторых материалов.",
+  airTitle:"Вентиляция и воздушный поток",
+  airDesc:"В космических аппаратах используется механическая вентиляция. Воздушный поток переносит кислород, тепло и дым и может влиять на поведение пламени. Результат зависит от материала и условий эксперимента.",
+  protectionTitle:"Противопожарная защита",
+  protectionDesc:"Защита космических аппаратов включает профилактику, подбор материалов, обнаружение пожара, аварийные процедуры и системы тушения. Оценка безопасности должна опираться на проверенные инженерные стандарты и требования конкретной миссии.",
+  researchTitle:"Исследования NASA",
+  researchDesc:"Эксперимент FLEX исследует горение капель жидкого топлива и затухание пламени. Исследования BASS изучают горение и распространение пламени по твёрдым материалам в микрогравитации. Эти работы помогают лучше понимать пожарные риски в космосе.",
+  dataTitle:"Выводы на основе данных",
+  dataDesc:"Измерения кислорода, углекислого и угарного газов помогают изучать условия экспериментов и продукты горения. Для надёжных выводов необходимы проверенные данные, информация о калибровке и контекст каждого эксперимента.",
+  recommendTitle:"Основные принципы безопасности",
+  recommendIntro:"Научные исследования позволяют выделить общие принципы изучения пожарной безопасности космических аппаратов.",
+  principle1:"1. Исследовать горючесть материалов при соответствующих условиях атмосферы и воздушного потока.",
+  principle2:"2. Учитывать влияние вентиляции на распространение пламени и перенос дыма.",
+  principle3:"3. Использовать проверенные экспериментальные данные и валидированные модели для оценки пожарных рисков.",
+  principle4:"4. Рассматривать учебные симуляции как визуальные объяснения, а не сертифицированные прогнозы безопасности.",
+  sourcesTitle:"Научные источники",
+  sourcesIntro:"Исследования и публикации о горении и пожарной безопасности в микрогравитации.",
+  disclaimerTitle:"Научные ограничения",
+  disclaimer:"Эта страница содержит образовательную научную информацию. Она не заменяет сертификацию пожарной безопасности, инженерный анализ и рабочие инструкции. Симулятор сайта является концептуальной визуализацией и не проверен как прогнозная модель пожарной безопасности."
+ },
+ kk:{
+  home:"Басты бет",simLink:"Симулятор",
+  title:"Ғарыштағы өрт қауіпсіздігі",
+  intro:"Ғарыш аппараттарының өрт қауіпсіздігіне әсер ететін факторларды және ғарышкерлерді қорғауға көмектесетін зерттеулерді қарастырыңыз.",
+  gravityTitle:"Микрогравитация",
+  gravityDesc:"Микрогравитацияда қалқымалылық әсерінен туындайтын конвекция едәуір әлсірейді. Ыстық газдар Жердегідей жоғары көтерілмейді. Жалынның пішіні мен жану өнімдерінің қозғалысы өзгеруі мүмкін, ал желдетудің маңызы артады.",
+  oxygenTitle:"Оттегінің концентрациясы",
+  oxygenDesc:"Оттегі жануды қолдайды. Оның концентрациясы, қысым, отын қасиеттері және қоршаған орта жағдайлары тұтану мен жалынның таралуына әсер етеді. Оттегі концентрациясының артуы кейбір материалдардың өрт қаупін күшейтуі мүмкін.",
+  airTitle:"Желдету және ауа ағыны",
+  airDesc:"Ғарыш аппараттарында механикалық желдету қолданылады. Ауа ағыны оттегіні, жылуды және түтінді тасымалдап, жалынның әрекетіне әсер етуі мүмкін. Нәтиже материалға және тәжірибе жағдайларына байланысты.",
+  protectionTitle:"Өрттен қорғау",
+  protectionDesc:"Ғарыш аппараттарын қорғау алдын алу шараларын, материалдарды таңдауды, өртті анықтауды, төтенше жағдай рәсімдерін және өрт сөндіру жүйелерін қамтиды. Қауіпсіздік тексерілген инженерлік стандарттар мен миссия талаптарына сүйеніп бағалануы тиіс.",
+  researchTitle:"NASA зерттеулері",
+  researchDesc:"FLEX тәжірибесі сұйық отын тамшыларының жануын және жалынның сөнуін зерттейді. BASS зерттеулері микрогравитацияда қатты материалдардың жануы мен жалынның таралуын қарастырады. Бұл жұмыстар ғарыштағы өрт қаупін түсінуге көмектеседі.",
+  dataTitle:"Деректерге негізделген қорытындылар",
+  dataDesc:"Оттегі, көмірқышқыл газы және көміртек тотығының өлшемдері тәжірибе жағдайлары мен жану өнімдерін зерттеуге көмектеседі. Сенімді қорытынды үшін тексерілген деректер, калибрлеу мәліметтері және әр тәжірибенің контексті қажет.",
+  recommendTitle:"Қауіпсіздіктің негізгі қағидалары",
+  recommendIntro:"Ғылыми зерттеулер ғарыш аппараттарының өрт қауіпсіздігін түсінуге арналған жалпы қағидаларды көрсетеді.",
+  principle1:"1. Материалдардың жанғыштығын тиісті атмосфера және ауа ағыны жағдайларында зерттеу.",
+  principle2:"2. Желдетудің жалын таралуы мен түтін қозғалысына әсерін ескеру.",
+  principle3:"3. Өрт қаупін бағалау үшін тексерілген тәжірибелік деректер мен валидацияланған модельдерді пайдалану.",
+  principle4:"4. Оқу симуляцияларын сертификатталған қауіпсіздік болжамы емес, көрнекі түсіндіру ретінде қарастыру.",
+  sourcesTitle:"Ғылыми дереккөздер",
+  sourcesIntro:"Микрогравитациядағы жану мен өрт қауіпсіздігіне қатысты зерттеулер мен жарияланымдар.",
+  disclaimerTitle:"Ғылыми шектеулер",
+  disclaimer:"Бұл бет білім беру мақсатындағы ғылыми ақпаратты ұсынады. Ол өрт қауіпсіздігін сертификаттауды, инженерлік талдауды немесе жұмыс нұсқаулықтарын алмастырмайды. Сайт симуляторы тұжырымдамалық визуализация болып табылады және өрт қауіпсіздігін болжайтын модель ретінде тексерілмеген."
+ }
+};
+
+function changeLanguage(lang){
+ if(!translations[lang])lang="en";
+ const t=translations[lang];
+ Object.keys(t).forEach(key=>{
+  const el=document.getElementById(key);
+  if(el)el.textContent=t[key];
+ });
+ document.documentElement.lang=lang;
+ document.getElementById("language").value=lang;
+ try{localStorage.setItem("siteLanguage",lang)}catch(e){}
+}
+
+let saved="en";
+try{saved=localStorage.getItem("siteLanguage")||"en"}catch(e){}
+changeLanguage(saved);
+</script>
+</body>
+</html>
