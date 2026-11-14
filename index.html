@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flame in Freefall | NASA Space Apps</title>
+<style>
+* {box-sizing:border-box;margin:0;padding:0}
+body {
+  background:#050b18;
+  color:white;
+  font-family:Arial,sans-serif;
+  line-height:1.6;
+}
+header {
+  padding:22px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #24334b;
+}
+.logo {font-weight:bold;letter-spacing:2px;color:#ff9b52}
+nav a {color:#cbd5e1;text-decoration:none;margin-left:22px;font-size:14px}
+.hero {
+  min-height:570px;
+  padding:90px 8%;
+  display:flex;
+  align-items:center;
+  gap:45px;
+  background:radial-gradient(circle at 75% 40%,#17345a,#050b18 65%);
+}
+.hero-content {flex:1}
+.tag {color:#63d7ef;letter-spacing:3px;font-size:12px}
+h1 {font-size:clamp(44px,6vw,75px);line-height:1.05;margin:20px 0}
+h1 span {color:#ff914d}
+.hero p {color:#bdc9da;max-width:550px;font-size:17px}
+.hero img {
+  width:45%;
+  max-height:330px;
+  object-fit:cover;
+  border-radius:16px;
+  border:1px solid #48617e;
+}
+.btn {
+  display:inline-block;
+  margin-top:28px;
+  padding:13px 22px;
+  background:#ff914d;
+  color:#111827;
+  font-weight:bold;
+  text-decoration:none;
+  border-radius:7px;
+}
+section {padding:75px 8%}
+h2 {font-size:34px;margin:12px 0 20px}
+.subtitle {color:#63d7ef;letter-spacing:2px;font-size:12px}
+.description {color:#b9c6d8;max-width:850px}
+.cards {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-top:35px;
+}
+.card {
+  padding:25px;
+  background:#101d32;
+  border:1px solid #293d59;
+  border-radius:12px;
+  text-decoration:none;
+  color:white;
+  transition:.2s;
+}
+.card:hover {transform:translateY(-5px);border-color:#ff914d}
+.icon {font-size:30px;margin-bottom:15px}
+.card p {font-size:13px;color:#aab8ca;margin:12px 0}
+.card strong {color:#ffad75;font-size:13px}
+footer {
+  padding:30px 8%;
+  border-top:1px solid #293d59;
+  color:#8293aa;
+  font-size:12px;
+}
+@media(max-width:850px) {
+  .hero {flex-direction:column;align-items:flex-start;padding-top:60px}
+  .hero img {width:100%}
+  .cards {grid-template-columns:repeat(2,1fr)}
+  nav a {margin-left:10px}
+}
+@media(max-width:520px) {
+  header {flex-direction:column;gap:12px}
+  .cards {grid-template-columns:1fr}
+  section {padding:55px 7%}
+}
+.language-picker{background:#101d32;color:white;border:1px solid #48617e;border-radius:7px;padding:9px;font-size:13px;cursor:pointer}header{gap:14px;flex-wrap:wrap}nav{display:flex;align-items:center;gap:15px;flex-wrap:wrap}nav a{margin-left:0}@media(max-width:520px){nav{justify-content:center}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">✦ FLAME IN FREEFALL</div>
+  <nav>
+    <a href="#problem" data-i18n="navChallenge">The Challenge</a>
+    <a href="#explore" data-i18n="navExplore">Explore</a>
+    <select id="language" class="language-picker" aria-label="Select language"><option value="en">🇬🇧 English</option><option value="ru">🇷🇺 Русский</option><option value="kk">🇰🇿 Қазақша</option></select>
+  </nav>
+</header>
+
+<main>
+<div class="hero">
+  <div class="hero-content">
+    <div class="tag" data-i18n="tag">NASA SPACE APPS CHALLENGE PROJECT</div>
+    <h1 data-i18n-html="heroTitle">Flame in<br><span>Freefall</span></h1>
+    <p data-i18n="heroDesc">
+      SI-Powered Fire Safety Insights from Microgravity
+      Combustion Data. Discover how fire behaves in space
+      and explore scientific solutions for safer future missions.
+    </p>
+    <a class="btn" href="#explore" data-i18n="heroButton">Explore the Project →</a>
+  </div>
+  
+<img src="flame.jpg" alt="Flame in microgravity">
+
+</div>
+
+<section id="problem">
+  <div class="subtitle" data-i18n="whyLabel">WHY THIS MATTERS</div>
+  <h2 data-i18n="whyTitle">Fire behaves differently in space.</h2>
+  <p class="description" data-i18n-html="whyDesc">
+    On Earth, gravity causes hot gases to rise and influences
+    the shape of a flame. In microgravity, this process changes.
+    Flames can become more spherical, and combustion products
+    behave differently. Fire detection and extinguishment can
+    therefore become more challenging.
+    <br><br>
+    As humans prepare to return to the Moon and travel to Mars,
+    understanding fire in spacecraft is essential for astronaut
+    safety. NASA experiments help researchers investigate
+    ignition, flame behavior and fire suppression in space.
+  </p>
+</section>
+
+<section id="explore">
+  <div class="subtitle" data-i18n="exploreLabel">DISCOVER OUR PLATFORM</div>
+  <h2 data-i18n="exploreTitle">Explore the project</h2>
+  <p class="description" data-i18n="exploreDesc">
+    Choose a section to investigate microgravity combustion
+    and discover new insights from space research.
+  </p>
+
+  <div class="cards">
+    <a class="card" href="simulator.html">
+      <div class="icon">🔥</div>
+      <h3 data-i18n="card1Title">Fire Simulator</h3>
+      <p data-i18n="card1Desc">Explore ignition and flame behavior under different conditions.</p>
+      <strong data-i18n="card1Action">OPEN SIMULATOR →</strong>
+    </a>
+
+    <a class="card" href="data-analysis.html">
+      <div class="icon">📊</div>
+      <h3 data-i18n="card2Title">NASA Data & Analysis</h3>
+      <p data-i18n="card2Desc">Analyze experimental data and discover scientific patterns.</p>
+      <strong data-i18n="card2Action">EXPLORE DATA →</strong>
+    </a>
+
+    <a class="card" href="information.html">
+      <div class="icon">🪐</div>
+      <h3 data-i18n="card3Title">Project Information</h3>
+      <p data-i18n="card3Desc">Learn about microgravity, combustion and NASA research.</p>
+      <strong data-i18n="card3Action">LEARN MORE →</strong>
+    </a>
+
+    <a class="card" href="assistant.html">
+      <div class="icon">🤖</div>
+      <h3 data-i18n="card4Title">AI Assistant</h3>
+      <p data-i18n="card4Desc">Ask questions about fire safety and combustion in space.</p>
+      <strong data-i18n="card4Action">ASK AI →</strong>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer>
+  FLAME IN FREEFALL · NASA SPACE APPS CHALLENGE
+  <br><span data-i18n="footer">Educational project based on NASA research.</span>
+</footer>
+
+<script>
+const translations = {
+  "en": {
+    "navChallenge": "The Challenge",
+    "navExplore": "Explore",
+    "tag": "NASA SPACE APPS CHALLENGE PROJECT",
+    "heroTitle": "Flame in<br><span>Freefall</span>",
+    "heroDesc": "SI-Powered Fire Safety Insights from Microgravity Combustion Data. Discover how fire behaves in space and explore scientific solutions for safer future missions.",
+    "heroButton": "Explore the Project →",
+    "whyLabel": "WHY THIS MATTERS",
+    "whyTitle": "Fire behaves differently in space.",
+    "whyDesc": "On Earth, gravity causes hot gases to rise and influences the shape of a flame. In microgravity, this process changes. Flames can become more spherical, and combustion products behave differently. Fire detection and extinguishment can therefore become more challenging.<br><br>As humans prepare to return to the Moon and travel to Mars, understanding fire in spacecraft is essential for astronaut safety. NASA experiments help researchers investigate ignition, flame behavior and fire suppression in space.",
+    "exploreLabel": "DISCOVER OUR PLATFORM",
+    "exploreTitle": "Explore the project",
+    "exploreDesc": "Choose a section to investigate microgravity combustion and discover new insights from space research.",
+    "card1Title": "Fire Simulator",
+    "card1Desc": "Explore ignition and flame behavior under different conditions.",
+    "card1Action": "OPEN SIMULATOR →",
+    "card2Title": "NASA Data & Analysis",
+    "card2Desc": "Analyze experimental data and discover scientific patterns.",
+    "card2Action": "EXPLORE DATA →",
+    "card3Title": "Project Information",
+    "card3Desc": "Learn about microgravity, combustion and NASA research.",
+    "card3Action": "LEARN MORE →",
+    "card4Title": "AI Assistant",
+    "card4Desc": "Ask questions about fire safety and combustion in space.",
+    "card4Action": "ASK AI →",
+    "footer": "Educational project based on NASA research."
+  },
+  "ru": {
+    "navChallenge": "Проблема",
+    "navExplore": "Разделы",
+    "tag": "ПРОЕКТ NASA SPACE APPS CHALLENGE",
+    "heroTitle": "Пламя в<br><span>невесомости</span>",
+    "heroDesc": "Научные исследования пожарной безопасности с использованием данных о горении в микрогравитации. Узнайте, как ведёт себя огонь в космосе и как сделать будущие миссии безопаснее.",
+    "heroButton": "Изучить проект →",
+    "whyLabel": "ПОЧЕМУ ЭТО ВАЖНО",
+    "whyTitle": "В космосе огонь ведёт себя иначе.",
+    "whyDesc": "На Земле под действием гравитации горячие газы поднимаются вверх, влияя на форму пламени. В микрогравитации этот процесс меняется. Пламя может становиться более сферическим, а продукты горения распространяются иначе. Поэтому обнаружение и тушение пожара могут быть сложнее.<br><br>При подготовке полётов на Луну и Марс понимание процессов горения внутри космических аппаратов жизненно важно для безопасности экипажа. Эксперименты NASA помогают изучать воспламенение, развитие пламени и способы тушения.",
+    "exploreLabel": "ВОЗМОЖНОСТИ ПЛАТФОРМЫ",
+    "exploreTitle": "Разделы проекта",
+    "exploreDesc": "Выберите раздел, чтобы изучить горение в микрогравитации и научные данные.",
+    "card1Title": "Симулятор огня",
+    "card1Desc": "Изучайте воспламенение и поведение пламени при разных условиях.",
+    "card1Action": "ОТКРЫТЬ СИМУЛЯТОР →",
+    "card2Title": "Данные и анализ NASA",
+    "card2Desc": "Анализируйте экспериментальные данные и выявляйте закономерности.",
+    "card2Action": "ИЗУЧИТЬ ДАННЫЕ →",
+    "card3Title": "О проекте",
+    "card3Desc": "Узнайте о микрогравитации, горении и исследованиях NASA.",
+    "card3Action": "ПОДРОБНЕЕ →",
+    "card4Title": "ИИ-ассистент",
+    "card4Desc": "Задавайте вопросы о пожарной безопасности и горении в космосе.",
+    "card4Action": "СПРОСИТЬ ИИ →",
+    "footer": "Образовательный проект на основе исследований NASA."
+  },
+  "kk": {
+    "navChallenge": "Мәселе",
+    "navExplore": "Бөлімдер",
+    "tag": "NASA SPACE APPS CHALLENGE ЖОБАСЫ",
+    "heroTitle": "Салмақсыздықтағы<br><span>жалын</span>",
+    "heroDesc": "Микрогравитациядағы жану деректеріне негізделген өрт қауіпсіздігін зерттеу. Ғарышта оттың қалай әрекет ететінін және болашақ миссияларды қалай қауіпсіз етуге болатынын біліңіз.",
+    "heroButton": "Жобаны зерттеу →",
+    "whyLabel": "БҰЛ НЕГЕ МАҢЫЗДЫ",
+    "whyTitle": "Ғарышта от басқаша әрекет етеді.",
+    "whyDesc": "Жерде тартылыс күшінің әсерінен ыстық газдар жоғары көтеріліп, жалынның пішініне ықпал етеді. Микрогравитацияда бұл үдеріс өзгереді. Жалын шар тәрізді болуы мүмкін, ал жану өнімдері басқаша таралады. Сондықтан өртті анықтау және сөндіру қиындауы мүмкін.<br><br>Ай мен Марсқа ұшуға дайындық кезінде ғарыш кемелеріндегі жануды түсіну экипаж қауіпсіздігі үшін аса маңызды. NASA тәжірибелері тұтануды, жалынның дамуын және өрт сөндіру тәсілдерін зерттеуге көмектеседі.",
+    "exploreLabel": "ПЛАТФОРМА МҮМКІНДІКТЕРІ",
+    "exploreTitle": "Жоба бөлімдері",
+    "exploreDesc": "Микрогравитациядағы жануды және ғылыми деректерді зерттеу үшін бөлімді таңдаңыз.",
+    "card1Title": "Өрт симуляторы",
+    "card1Desc": "Әртүрлі жағдайларда тұтану мен жалынның әрекетін зерттеңіз.",
+    "card1Action": "СИМУЛЯТОРДЫ АШУ →",
+    "card2Title": "NASA деректері және талдау",
+    "card2Desc": "Эксперименттік деректерді талдап, заңдылықтарды анықтаңыз.",
+    "card2Action": "ДЕРЕКТЕРДІ ҚАРАУ →",
+    "card3Title": "Жоба туралы",
+    "card3Desc": "Микрогравитация, жану және NASA зерттеулері туралы біліңіз.",
+    "card3Action": "ТОЛЫҒЫРАҚ →",
+    "card4Title": "ЖИ көмекшісі",
+    "card4Desc": "Ғарыштағы өрт қауіпсіздігі мен жану туралы сұрақ қойыңыз.",
+    "card4Action": "ЖИ-ДАН СҰРАУ →",
+    "footer": "NASA зерттеулеріне негізделген білім беру жобасы."
+  }
+};
+function changeLanguage(lang) {
+  if (!translations[lang]) lang = 'en';
+  const t = translations[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (Object.hasOwn(t, key)) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (Object.hasOwn(t, key)) el.innerHTML = t[key];
+  });
+  document.documentElement.lang = lang;
+  document.getElementById('language').value = lang;
+  try { localStorage.setItem('siteLanguage', lang); } catch(e) {}
+}
+let savedLanguage = 'en';
+try { savedLanguage = localStorage.getItem('siteLanguage') || 'en'; } catch(e) {}
+changeLanguage(savedLanguage);
+document.getElementById('language').addEventListener('change', e => changeLanguage(e.target.value));
+</script>
+</body>
+</html>
