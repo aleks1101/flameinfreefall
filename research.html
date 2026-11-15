@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Research & Methodology | Flame in Freefall</title>
+<style>
+:root{
+ --bg:#050b18;--panel:#101d32;
+ --line:#293d59;--orange:#ff9b58;
+ --blue:#69d9ee;--muted:#b8c8db
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;color:#f2f6ff;
+ font:16px/1.7 Arial,sans-serif;
+ background:radial-gradient(circle at 80% 0%,#19375c,#050b18 55%)
+}
+header{
+ padding:20px 7%;background:#091427;
+ border-bottom:1px solid var(--line);
+ display:flex;justify-content:space-between;
+ align-items:center;gap:15px;flex-wrap:wrap
+}
+.logo{
+ color:var(--orange);font-weight:bold;
+ text-decoration:none;letter-spacing:1px
+}
+nav{display:flex;gap:17px;align-items:center;flex-wrap:wrap}
+nav a{color:#d0deed;text-decoration:none}
+select{
+ background:#14243c;color:white;
+ border:1px solid #48617e;border-radius:8px;padding:10px
+}
+main{max-width:1180px;margin:auto;padding:55px 20px}
+.tag{color:var(--blue);font-size:12px;letter-spacing:2px}
+h1{font-size:clamp(35px,5vw,58px);line-height:1.1}
+h2{color:var(--orange);font-size:25px}
+h3{color:#e7f1ff}
+p{color:var(--muted)}
+.lead{max-width:850px;font-size:18px}
+.grid{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:20px;margin-top:35px
+}
+.card{
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:15px;padding:26px;min-width:0
+}
+.full{grid-column:1/-1}
+.icon{font-size:30px;margin-bottom:12px}
+.steps{display:grid;gap:14px;margin-top:20px}
+.step{
+ padding:16px;background:#172b46;
+ border-left:3px solid var(--blue);border-radius:7px
+}
+.step strong{color:#f2f6ff}
+.note{
+ margin-top:20px;background:#252b3a;
+ border-left:3px solid var(--orange);
+ padding:17px;border-radius:8px;color:#d6e2f0
+}
+.sources a{
+ display:block;color:var(--blue);
+ margin:14px 0;overflow-wrap:anywhere
+}
+.btn{
+ display:inline-block;background:var(--orange);
+ color:#101827;text-decoration:none;
+ padding:12px 20px;border-radius:8px;font-weight:bold
+}
+footer{
+ border-top:1px solid var(--line);
+ padding:28px 7%;color:#91a5bd;font-size:13px
+}
+@media(max-width:750px){
+ .grid{grid-template-columns:1fr}
+ .full{grid-column:auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <a class="logo" href="index.html">✦ FLAME IN FREEFALL</a>
+ <nav>
+  <a href="index.html" id="home">Home</a>
+  <a href="simulator.html" id="simLink">Simulator</a>
+  <a href="data-analysis.html" id="dataLink">NASA Data</a>
+  <select id="language" onchange="changeLanguage(this.value)">
+   <option value="en">🇬🇧 English</option>
+   <option value="ru">🇷🇺 Русский</option>
+   <option value="kk">🇰🇿 Қазақша</option>
+  </select>
+ </nav>
+</header>
+
+<main>
+ <div class="tag">NASA SPACE APPS CHALLENGE</div>
+ <h1 id="title">Research & Methodology</h1>
+ <p class="lead" id="intro">
+  Exploring combustion in microgravity through
+  scientific literature, experimental observations,
+  data analysis and educational visualization.
+ </p>
+
+ <div class="grid">
+
+  <section class="card">
+   <div class="icon">🌌</div>
+   <h2 id="problemTitle">Research Problem</h2>
+   <p id="problemDesc">
+    Fire behaves differently in microgravity because
+    buoyancy-driven convection is strongly reduced.
+    This changes heat and mass transfer, flame geometry
+    and the movement of combustion products.
+    Understanding these effects is important for
+    spacecraft fire safety.
+   </p>
+  </section>
+
+  <section class="card">
+   <div class="icon">🎯</div>
+   <h2 id="goalTitle">Research Goal</h2>
+   <p id="goalDesc">
+    To investigate how gravity, oxygen concentration,
+    airflow and material properties influence
+    combustion behavior, using scientific evidence
+    and an interactive educational simulator.
+   </p>
+  </section>
+
+  <section class="card">
+   <div class="icon">💡</div>
+   <h2 id="hypothesisTitle">Research Hypothesis</h2>
+   <p id="hypothesisDesc">
+    Reduced buoyancy in microgravity can produce
+    more spherical diffusion flames under suitable
+    conditions. Oxygen availability, ventilation
+    and fuel properties may significantly change
+    flame behavior and fire hazards.
+   </p>
+  </section>
+
+  <section class="card">
+   <div class="icon">📋</div>
+   <h2 id="tasksTitle">Research Objectives</h2>
+   <p id="tasksDesc">
+    Review NASA combustion experiments; study the
+    influence of gravity, oxygen and airflow;
+    examine available gas measurements; compare
+    material behavior; and communicate scientific
+    concepts through interactive visualization.
+   </p>
+  </section>
+
+  <section class="card full">
+   <div class="icon">🔬</div>
+   <h2 id="methodsTitle">Research Methodology</h2>
+   <p id="methodsIntro">
+    The project follows a structured research
+    workflow combining literature review,
+    preliminary data exploration and simulation.
+   </p>
+
+   <div class="steps">
+    <div class="step">
+     <strong id="step1Title">01 — Literature Review</strong>
+     <p id="step1Desc">
+      Study scientific publications and NASA
+      experiment descriptions related to
+      microgravity combustion and fire safety.
+     </p>
+    </div>
+
+    <div class="step">
+     <strong id="step2Title">02 — Data Preparation</strong>
+     <p id="step2Desc">
+      Organize available experimental records,
+      identify variables, missing values and
+      potential data quality issues.
+     </p>
+    </div>
+
+    <div class="step">
+     <strong id="step3Title">03 — Exploratory Analysis</strong>
+     <p id="step3Desc">
+      Visualize initial and final gas measurements
+      and compare observations without assuming
+      causal relationships.
+     </p>
+    </div>
+
+    <div class="step">
+     <strong id="step4Title">04 — Educational Simulation</strong>
+     <p id="step4Desc">
+      Develop a qualitative visualization of
+      flame behavior under selected gravity,
+      oxygen, ventilation and material conditions.
+     </p>
+    </div>
+
+    <div class="step">
+     <strong id="step5Title">05 — Interpretation</strong>
+     <p id="step5Desc">
+      Compare general simulation behavior with
+      established scientific principles and
+      explain uncertainties and limitations.
+     </p>
+    </div>
+   </div>
+  </section>
+
+  <section class="card">
+   <div class="icon">🔥</div>
+   <h2 id="flexTitle">NASA FLEX Experiment</h2>
+   <p id="flexDesc">
+    The Flame Extinguishment Experiment investigates
+    combustion of liquid fuel droplets in microgravity,
+    including flame extinction and combustion behavior
+    under conditions where buoyancy effects are reduced.
+   </p>
+  </section>
+
+  <section class="card">
+   <div class="icon">🧪</div>
+   <h2 id="bassTitle">NASA BASS and BASS-II</h2>
+   <p id="bassDesc">
+    Burning and Suppression of Solids experiments
+    investigate flame spread over solid materials
+    in microgravity, including the influence
+    of ventilation and material characteristics.
+   </p>
+  </section>
+
+  <section class="card">
+   <div class="icon">📊</div>
+   <h2 id="dataTitle">Experimental Data</h2>
+   <p id="dataDesc">
+    The Data & Analysis section contains a
+    preliminary secondary dataset of 20 BASS-II
+    records with oxygen, carbon dioxide and
+    carbon monoxide measurements. These records
+    require verification against original NASA data.
+   </p>
+   <a class="btn" href="data-analysis.html" id="dataButton">
+    Explore NASA Data
+   </a>
+  </section>
+
+  <section class="card">
+   <div class="icon">🪐</div>
+   <h2 id="simTitle">Interactive Simulation</h2>
+   <p id="simDesc">
+    The simulator illustrates possible qualitative
+    changes in flame shape when gravity, oxygen,
+    ventilation or material selection changes.
+    It is not a validated physical combustion model.
+   </p>
+   <a class="btn" href="simulator.html" id="simButton">
+    Open Simulator
+   </a>
+  </section>
+
+  <section class="card full">
+   <div class="icon">⚖️</div>
+   <h2 id="limitationsTitle">Research Limitations</h2>
+   <p id="limitationsDesc">
+    Available numerical records come from a secondary
+    dataset and have not been independently verified
+    against NASA archives. The simulator uses
+    conceptual relationships rather than calibrated
+    combustion equations. No experimental validation,
+    uncertainty quantification or predictive
+    fire-risk assessment has been completed.
+   </p>
+   <div class="note" id="note">
+    Scientific conclusions must distinguish
+    documented NASA findings, preliminary
+    observations and educational illustrations.
+   </div>
+  </section>
+
+  <section class="card full sources">
+   <div class="icon">📚</div>
+   <h2 id="sourcesTitle">Scientific References</h2>
+   <p id="sourcesIntro">
+    Selected publications and NASA research
+    materials relevant to this project.
+   </p>
+
+   <a target="_blank" rel="noopener noreferrer"
+    href="https://www.sciencedirect.com/science/article/abs/pii/S0010218017300846">
+    Combustion and Flame — Scientific Research Article
+   </a>
+
+   <a target="_blank" rel="noopener noreferrer"
+    href="https://www.americanscientist.org/article/fire-in-microgravity">
+    American Scientist — Fire in Microgravity
+   </a>
+
+   <a target="_blank" rel="noopener noreferrer"
+    href="https://www.nasa.gov/wp-content/uploads/2025/07/flame-extinguishment-experiment-flex.pdf?emrc=f75994">
+    NASA — Flame Extinguishment Experiment (FLEX)
+   </a>
+
+   <a target="_blank" rel="noopener noreferrer"
+    href="https://www.nasa.gov/wp-content/uploads/2025/07/burning-and-suppression-of-solids-bass.pdf?emrc=3a5c2c">
+    NASA — Burning and Suppression of Solids (BASS)
+   </a>
+
+   <a target="_blank" rel="noopener noreferrer"
+    href="https://hightech.fm/2023/09/29/tiangong-fire-microgravity">
+    Hightech — Fire Research in Microgravity
+   </a>
+  </section>
+
+ </div>
+</main>
+
+<footer>
+ FLAME IN FREEFALL · NASA SPACE APPS CHALLENGE
+</footer>
+
+<script>
+const translations={
+ en:{
+  home:"Home",
+  simLink:"Simulator",
+  dataLink:"NASA Data",
+  title:"Research & Methodology",
+  intro:"Exploring combustion in microgravity through scientific literature, experimental observations, data analysis and educational visualization.",
+  problemTitle:"Research Problem",
+  problemDesc:"Fire behaves differently in microgravity because buoyancy-driven convection is strongly reduced. This changes heat and mass transfer, flame geometry and the movement of combustion products. Understanding these effects is important for spacecraft fire safety.",
+  goalTitle:"Research Goal",
+  goalDesc:"To investigate how gravity, oxygen concentration, airflow and material properties influence combustion behavior, using scientific evidence and an interactive educational simulator.",
+  hypothesisTitle:"Research Hypothesis",
+  hypothesisDesc:"Reduced buoyancy in microgravity can produce more spherical diffusion flames under suitable conditions. Oxygen availability, ventilation and fuel properties may significantly change flame behavior and fire hazards.",
+  tasksTitle:"Research Objectives",
+  tasksDesc:"Review NASA combustion experiments; study the influence of gravity, oxygen and airflow; examine available gas measurements; compare material behavior; and communicate scientific concepts through interactive visualization.",
+  methodsTitle:"Research Methodology",
+  methodsIntro:"The project follows a structured research workflow combining literature review, preliminary data exploration and simulation.",
+  step1Title:"01 — Literature Review",
+  step1Desc:"Study scientific publications and NASA experiment descriptions related to microgravity combustion and fire safety.",
+  step2Title:"02 — Data Preparation",
+  step2Desc:"Organize available experimental records, identify variables, missing values and potential data quality issues.",
+  step3Title:"03 — Exploratory Analysis",
+  step3Desc:"Visualize initial and final gas measurements and compare observations without assuming causal relationships.",
+  step4Title:"04 — Educational Simulation",
+  step4Desc:"Develop a qualitative visualization of flame behavior under selected gravity, oxygen, ventilation and material conditions.",
+  step5Title:"05 — Interpretation",
+  step5Desc:"Compare general simulation behavior with established scientific principles and explain uncertainties and limitations.",
+  flexTitle:"NASA FLEX Experiment",
+  flexDesc:"The Flame Extinguishment Experiment investigates combustion of liquid fuel droplets in microgravity, including flame extinction and combustion behavior under conditions where buoyancy effects are reduced.",
+  bassTitle:"NASA BASS and BASS-II",
+  bassDesc:"Burning and Suppression of Solids experiments investigate flame spread over solid materials in microgravity, including the influence of ventilation and material characteristics.",
+  dataTitle:"Experimental Data",
+  dataDesc:"The Data & Analysis section contains a preliminary secondary dataset of 20 BASS-II records with oxygen, carbon dioxide and carbon monoxide measurements. These records require verification against original NASA data.",
+  dataButton:"Explore NASA Data",
+  simTitle:"Interactive Simulation",
+  simDesc:"The simulator illustrates possible qualitative changes in flame shape when gravity, oxygen, ventilation or material selection changes. It is not a validated physical combustion model.",
+  simButton:"Open Simulator",
+  limitationsTitle:"Research Limitations",
+  limitationsDesc:"Available numerical records come from a secondary dataset and have not been independently verified against NASA archives. The simulator uses conceptual relationships rather than calibrated combustion equations. No experimental validation, uncertainty quantification or predictive fire-risk assessment has been completed.",
+  note:"Scientific conclusions must distinguish documented NASA findings, preliminary observations and educational illustrations.",
+  sourcesTitle:"Scientific References",
+  sourcesIntro:"Selected publications and NASA research materials relevant to this project."
+ },
+ ru:{
+  home:"Главная",
+  simLink:"Симулятор",
+  dataLink:"Данные NASA",
+  title:"Исследование и методология",
+  intro:"Изучение горения в микрогравитации на основе научной литературы, экспериментальных наблюдений, анализа данных и образовательной визуализации.",
+  problemTitle:"Научная проблема",
+  problemDesc:"В микрогравитации горение происходит иначе из-за ослабления конвекции, вызванной плавучестью. Изменяются перенос тепла и вещества, форма пламени и движение продуктов горения. Понимание этих процессов важно для пожарной безопасности космических аппаратов.",
+  goalTitle:"Цель исследования",
+  goalDesc:"Изучить влияние гравитации, концентрации кислорода, воздушного потока и свойств материалов на поведение пламени с использованием научных данных и интерактивного учебного симулятора.",
+  hypothesisTitle:"Гипотеза исследования",
+  hypothesisDesc:"Ослабление плавучей конвекции в микрогравитации при определённых условиях способствует формированию более сферического диффузионного пламени. Доступность кислорода, вентиляция и свойства топлива могут существенно влиять на горение и пожарную опасность.",
+  tasksTitle:"Задачи исследования",
+  tasksDesc:"Изучить эксперименты NASA, исследовать влияние гравитации, кислорода и вентиляции, рассмотреть доступные газовые измерения, сравнить особенности горения материалов и представить научные принципы в интерактивной форме.",
+  methodsTitle:"Методология исследования",
+  methodsIntro:"Проект объединяет анализ научной литературы, предварительное изучение экспериментальных данных и учебное моделирование.",
+  step1Title:"01 — Анализ литературы",
+  step1Desc:"Изучение научных публикаций и описаний экспериментов NASA по горению и пожарной безопасности в микрогравитации.",
+  step2Title:"02 — Подготовка данных",
+  step2Desc:"Систематизация доступных экспериментальных записей, определение переменных, пропущенных значений и возможных проблем качества данных.",
+  step3Title:"03 — Анализ данных",
+  step3Desc:"Построение графиков начальных и конечных измерений газов и сравнение наблюдений без необоснованных причинно-следственных выводов.",
+  step4Title:"04 — Учебная симуляция",
+  step4Desc:"Разработка качественной визуализации пламени при изменении гравитации, кислорода, вентиляции и выбранного материала.",
+  step5Title:"05 — Интерпретация",
+  step5Desc:"Сопоставление поведения симулятора с известными научными принципами и объяснение неопределённостей и ограничений.",
+  flexTitle:"Эксперимент NASA FLEX",
+  flexDesc:"Flame Extinguishment Experiment исследует горение капель жидкого топлива в микрогравитации, включая условия затухания пламени и особенности горения при ослабленной плавучей конвекции.",
+  bassTitle:"Эксперименты NASA BASS и BASS-II",
+  bassDesc:"Burning and Suppression of Solids исследуют горение и распространение пламени по твёрдым материалам в микрогравитации, включая влияние вентиляции и характеристик материалов.",
+  dataTitle:"Экспериментальные данные",
+  dataDesc:"Раздел Data & Analysis содержит предварительную вторичную выборку из 20 записей BASS-II с измерениями кислорода, углекислого и угарного газов. Данные требуют сверки с оригинальными архивами NASA.",
+  dataButton:"Изучить данные NASA",
+  simTitle:"Интерактивный симулятор",
+  simDesc:"Симулятор качественно показывает возможные изменения формы пламени при выборе гравитации, кислорода, вентиляции и материала. Он не является валидированной физической моделью горения.",
+  simButton:"Открыть симулятор",
+  limitationsTitle:"Ограничения исследования",
+  limitationsDesc:"Числовые записи получены из вторичного набора данных и не прошли независимую проверку по архивам NASA. Симулятор использует концептуальные зависимости, а не калиброванные уравнения горения. Экспериментальная валидация, количественная оценка неопределённости и прогнозирование пожарных рисков не проводились.",
+  note:"При формулировании научных выводов необходимо различать подтверждённые результаты NASA, предварительные наблюдения и учебные иллюстрации.",
+  sourcesTitle:"Научные источники",
+  sourcesIntro:"Публикации и материалы NASA, связанные с темой исследования."
+ },
+ kk:{
+  home:"Басты бет",
+  simLink:"Симулятор",
+  dataLink:"NASA деректері",
+  title:"Зерттеу және әдістеме",
+  intro:"Микрогравитациядағы жануды ғылыми әдебиет, тәжірибелік бақылаулар, деректерді талдау және оқу визуализациясы арқылы зерттеу.",
+  problemTitle:"Ғылыми мәселе",
+  problemDesc:"Микрогравитацияда қалқымалылық әсерінен туындайтын конвекция әлсірейді. Бұл жылу мен зат алмасуға, жалын пішініне және жану өнімдерінің қозғалысына әсер етеді. Осы үдерістерді түсіну ғарыш аппараттарының өрт қауіпсіздігі үшін маңызды.",
+  goalTitle:"Зерттеу мақсаты",
+  goalDesc:"Ғылыми деректер мен интерактивті оқу симуляторы арқылы гравитацияның, оттегі концентрациясының, ауа ағынының және материал қасиеттерінің жануға әсерін зерттеу.",
+  hypothesisTitle:"Зерттеу гипотезасы",
+  hypothesisDesc:"Микрогравитацияда қалқымалылық конвекциясының әлсіреуі белгілі жағдайларда диффузиялық жалынның шар тәрізді болуына ықпал етуі мүмкін. Оттегі, желдету және отын қасиеттері жану мен өрт қаупіне әсер етеді.",
+  tasksTitle:"Зерттеу міндеттері",
+  tasksDesc:"NASA тәжірибелерін зерттеу, гравитация, оттегі және желдету әсерін қарастыру, газ өлшемдерін талдау, материалдардың жану ерекшеліктерін салыстыру және ғылыми ұғымдарды интерактивті түрде көрсету.",
+  methodsTitle:"Зерттеу әдістемесі",
+  methodsIntro:"Жоба ғылыми әдебиетті талдауды, алдын ала тәжірибелік деректерді зерттеуді және оқу модельдеуін біріктіреді.",
+  step1Title:"01 — Әдебиеттерді талдау",
+  step1Desc:"Микрогравитациядағы жану мен өрт қауіпсіздігі туралы NASA тәжірибелері мен ғылыми жарияланымдарын зерттеу.",
+  step2Title:"02 — Деректерді дайындау",
+  step2Desc:"Қолжетімді тәжірибелік жазбаларды жүйелеу, айнымалыларды, жетіспейтін мәндерді және деректер сапасындағы мәселелерді анықтау.",
+  step3Title:"03 — Деректерді талдау",
+  step3Desc:"Газдардың бастапқы және соңғы өлшемдерін графикте көрсету және негізсіз себеп-салдарлық қорытынды жасамай салыстыру.",
+  step4Title:"04 — Оқу симуляциясы",
+  step4Desc:"Гравитация, оттегі, желдету және материал өзгергенде жалынның ықтимал пішінін сапалық түрде бейнелеу.",
+  step5Title:"05 — Түсіндіру",
+  step5Desc:"Симулятор нәтижелерін белгілі ғылыми қағидалармен салыстыру және шектеулер мен белгісіздіктерді түсіндіру.",
+  flexTitle:"NASA FLEX тәжірибесі",
+  flexDesc:"Flame Extinguishment Experiment микрогравитацияда сұйық отын тамшыларының жануын, жалынның сөнуін және қалқымалылық конвекциясы әлсіреген жағдайдағы жану ерекшеліктерін зерттейді.",
+  bassTitle:"NASA BASS және BASS-II тәжірибелері",
+  bassDesc:"Burning and Suppression of Solids микрогравитацияда қатты материалдардың жануы мен жалынның таралуын, желдету мен материал сипаттарының әсерін зерттейді.",
+  dataTitle:"Тәжірибелік деректер",
+  dataDesc:"Data & Analysis бөлімінде оттегі, көмірқышқыл газы және көміртек тотығы өлшемдері бар BASS-II бойынша 20 алдын ала жазба берілген. Деректерді NASA түпнұсқаларымен салыстыру қажет.",
+  dataButton:"NASA деректерін қарау",
+  simTitle:"Интерактивті симулятор",
+  simDesc:"Симулятор гравитация, оттегі, желдету және материал өзгергенде жалын пішінінің ықтимал өзгерістерін сапалық түрде көрсетеді. Ол тексерілген физикалық модель емес.",
+  simButton:"Симуляторды ашу",
+  limitationsTitle:"Зерттеу шектеулері",
+  limitationsDesc:"Сандық жазбалар екінші реттік деректер жиынтығынан алынған және NASA архивтерімен тәуелсіз тексерілмеген. Симулятор калибрленген жану теңдеулерінің орнына тұжырымдамалық байланыстарды пайдаланады. Тәжірибелік валидация, белгісіздікті сандық бағалау және өрт қаупін болжау жүргізілмеген.",
+  note:"Ғылыми қорытындыларда NASA-ның расталған нәтижелерін, алдын ала бақылауларды және оқу иллюстрацияларын ажырату қажет.",
+  sourcesTitle:"Ғылыми дереккөздер",
+  sourcesIntro:"Зерттеу тақырыбына қатысты ғылыми жарияланымдар мен NASA материалдары."
+ }
+};
+
+function changeLanguage(lang){
+ if(!translations[lang])lang="en";
+ const t=translations[lang];
+
+ Object.keys(t).forEach(key=>{
+  const element=document.getElementById(key);
+  if(element)element.textContent=t[key];
+ });
+
+ document.documentElement.lang=lang;
+ document.getElementById("language").value=lang;
+
+ try{
+  localStorage.setItem("siteLanguage",lang);
+ }catch(e){}
+}
+
+let saved="en";
+try{
+ saved=localStorage.getItem("siteLanguage")||"en";
+}catch(e){}
+changeLanguage(saved);
+</script>
+</body>
+</html>
