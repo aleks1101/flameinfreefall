@@ -1,46 +1,85 @@
 
 const MODEL = "gemini-3.5-flash-lite";
 
-const API_URL =
+const GEMINI_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/" +
-  MODEL + ":generateContent";
+  MODEL +
+  ":generateContent";
+
+const SYSTEM_PROMPT = `
+You are Flame Intelligence AI, a scientific
+educational assistant for the Flame in Freefall project.
+
+Your topics include:
+- Combustion in microgravity
+- NASA FLEX experiments
+- NASA BASS and BASS-II experiments
+- Oxygen concentration
+- Ventilation and airflow
+- Gravity on Earth, Moon and Mars
+- Spacecraft fire safety
+- Flame behavior and extinguishment
+
+Answer in the same language as the user:
+Russian, English or Kazakh.
+
+Explain scientific concepts clearly.
+Never invent NASA experimental measurements.
+Do not fabricate scientific citations.
+Distinguish established science from
+educational simulations and hypotheses.
+Do not claim to have read files that
+were not supplied to the API.
+`;
+
+function sendJSON(res, status, data) {
+  return res.status(status).json(data);
+}
 
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
+  console.log("Chat request received:", req.method);
+
   if (req.method !== "POST") {
-    return res.status(405).json({
-      error: "Method not allowed"
+    res.setHeader("Allow", "POST");
+
+    return sendJSON(res, 405, {
+      error: "Only POST requests are allowed"
     });
   }
 
   if (!process.env.GEMINI_API_KEY) {
-    return res.status(500).json({
+    return sendJSON(res, 500, {
       error: "GEMINI_API_KEY is missing"
     });
   }
 
-  const question = req.body?.question;
+  const question =
+    req.body?.question || req.body?.message;
 
   if (
     typeof question !== "string" ||
     !question.trim() ||
     question.length > 2000
   ) {
-    return res.status(400).json({
-      error: "Invalid question"
+    return sendJSON(res, 400, {
+      error: "Question must contain 1-2000 characters"
     });
   }
 
   const controller = new AbortController();
 
-  const timeout = setTimeout(
-    () => controller.abort(),
-    20000
-  );
+  const timeout = setTimeout(() => {
+    controller.abort();
+  }, 20000);
+
+  const started = Date.now();
 
   try {
-    const response = await fetch(API_URL, {
+    console.log("Starting Gemini request:", MODEL);
+
+    const response = await fetch(GEMINI_URL, {
       method: "POST",
       signal: controller.signal,
       headers: {
@@ -50,32 +89,14 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         systemInstruction: {
           parts: [{
-            text: `
-You are Flame Intelligence AI,
-an educational scientific assistant
-for the Flame in Freefall project.
-
-Your topics:
-- Microgravity combustion
-- NASA FLEX experiment
-- NASA BASS and BASS-II
-- Oxygen concentration
-- Ventilation and airflow
-- Spacecraft fire safety
-- Gravity on Earth, Moon and Mars
-
-Answer in Russian, English or Kazakh,
-matching the user's language.
-
-Explain science clearly.
-Never invent NASA measurements or citations.
-Distinguish verified science from simulations.
-`
+            text: SYSTEM_PROMPT
           }]
         },
         contents: [{
           role: "user",
-          parts: [{ text: question.trim() }]
+          parts: [{
+            text: question.trim()
+          }]
         }],
         generationConfig: {
           temperature: 0.3,
@@ -84,11 +105,34 @@ Distinguish verified science from simulations.
       })
     });
 
+    console.log(
+      "Gemini HTTP:",
+      response.status,
+      "Duration:",
+      Date.now() - started,
+      "ms"
+    );
+
     const data = await response.json();
 
     if (!response.ok) {
-      return res.status(502).json({
-        error: "Gemini API request failed",
+      const details =
+        data.error?.message ||
+        "Unknown Gemini API error";
+
+      console.error(
+        "Gemini API error:",
+        response.status,
+        details.slice(0, 300)
+      );
+
+      return sendJSON(res, 502, {
+        error:
+          response.status === 503
+            ? "Gemini is temporarily unavailable"
+            : response.status === 429
+            ? "Gemini API quota or rate limit reached"
+            : "Gemini API request failed",
         upstreamStatus: response.status
       });
     }
@@ -101,26 +145,34 @@ Distinguish verified science from simulations.
       .trim();
 
     if (!answer) {
-      return res.status(502).json({
+      return sendJSON(res, 502, {
         error: "Gemini returned an empty response"
       });
     }
 
-    return res.status(200).json({
-      answer
+    return sendJSON(res, 200, {
+      answer,
+      model: MODEL
     });
 
   } catch (error) {
-    if (error.name === "AbortError") {
-      return res.status(504).json({
+    console.error(
+      "Gemini request exception:",
+      error?.name,
+      error?.message
+    );
+
+    if (
+      controller.signal.aborted ||
+      error?.name === "AbortError"
+    ) {
+      return sendJSON(res, 504, {
         error: "Gemini did not respond within 20 seconds"
       });
     }
 
-    console.error("Gemini error:", error);
-
-    return res.status(500).json({
-      error: "Server error"
+    return sendJSON(res, 500, {
+      error: "Gemini request failed unexpectedly"
     });
 
   } finally {
