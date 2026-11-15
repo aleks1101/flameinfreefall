@@ -1,28 +1,9 @@
 
-const API_BASE =
-  "https://generativelanguage.googleapis.com/v1beta";
+const MODEL = "gemini-3.5-flash-lite";
 
-const SYSTEM_PROMPT = `
-You are Flame Intelligence, a scientific AI assistant
-for the Flame in Freefall educational project.
-
-Your topics:
-- Combustion in microgravity
-- NASA FLEX experiments
-- NASA BASS and BASS-II experiments
-- Oxygen concentration
-- Ventilation and airflow
-- Spacecraft fire safety
-- Gravity on Earth, Moon and Mars
-
-Answer in the user's language:
-Russian, English or Kazakh.
-
-Explain science clearly.
-Do not invent NASA experimental data or citations.
-Distinguish scientific evidence from simulations.
-Do not claim to have read files not supplied to you.
-`;
+const API_URL =
+  "https://generativelanguage.googleapis.com/v1beta/models/" +
+  MODEL + ":generateContent";
 
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
@@ -35,97 +16,75 @@ export default async function handler(req, res) {
 
   if (!process.env.GEMINI_API_KEY) {
     return res.status(500).json({
-      error: "GEMINI_API_KEY is not configured"
+      error: "GEMINI_API_KEY is missing"
     });
   }
 
+  const question = req.body?.question;
+
+  if (
+    typeof question !== "string" ||
+    !question.trim() ||
+    question.length > 2000
+  ) {
+    return res.status(400).json({
+      error: "Invalid question"
+    });
+  }
+
+  const controller = new AbortController();
+
+  const timeout = setTimeout(
+    () => controller.abort(),
+    20000
+  );
+
   try {
-    const question = req.body?.question;
+    const response = await fetch(API_URL, {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": process.env.GEMINI_API_KEY
+      },
+      body: JSON.stringify({
+        systemInstruction: {
+          parts: [{
+            text: `
+You are Flame Intelligence AI,
+an educational scientific assistant
+for the Flame in Freefall project.
 
-    if (
-      typeof question !== "string" ||
-      !question.trim() ||
-      question.length > 2000
-    ) {
-      return res.status(400).json({
-        error: "Invalid question"
-      });
-    }
+Your topics:
+- Microgravity combustion
+- NASA FLEX experiment
+- NASA BASS and BASS-II
+- Oxygen concentration
+- Ventilation and airflow
+- Spacecraft fire safety
+- Gravity on Earth, Moon and Mars
 
-    // Discover available text-generation models.
-    const modelsResponse = await fetch(
-      API_BASE + "/models?pageSize=100",
-      {
-        headers: {
-          "x-goog-api-key": process.env.GEMINI_API_KEY
+Answer in Russian, English or Kazakh,
+matching the user's language.
+
+Explain science clearly.
+Never invent NASA measurements or citations.
+Distinguish verified science from simulations.
+`
+          }]
+        },
+        contents: [{
+          role: "user",
+          parts: [{ text: question.trim() }]
+        }],
+        generationConfig: {
+          temperature: 0.3,
+          maxOutputTokens: 600
         }
-      }
-    );
-
-    if (!modelsResponse.ok) {
-      return res.status(502).json({
-        error: "Could not retrieve Gemini models",
-        upstreamStatus: modelsResponse.status
-      });
-    }
-
-    const modelsData = await modelsResponse.json();
-
-    const models = (modelsData.models || []).filter(
-      model =>
-        model.supportedGenerationMethods
-          ?.includes("generateContent") &&
-        /^models\/gemini-/i.test(model.name) &&
-        /flash/i.test(model.name) &&
-        !/image|tts|live|embedding/i.test(model.name)
-    );
-
-    models.sort((a, b) => {
-      const version = name => {
-        const match = name.match(
-          /gemini-(\d+)(?:\.(\d+))?/
-        );
-
-        return match
-          ? Number(match[1]) * 100 +
-            Number(match[2] || 0)
-          : 0;
-      };
-
-      return version(b.name) - version(a.name);
+      })
     });
 
-    const model = models[0]?.name;
-
-    if (!model) {
-      return res.status(502).json({
-        error: "No Gemini Flash model available"
-      });
-    }
-
-    const response = await fetch(
-      API_BASE + "/" + model + ":generateContent",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": process.env.GEMINI_API_KEY
-        },
-        body: JSON.stringify({
-          systemInstruction: {
-            parts: [{ text: SYSTEM_PROMPT }]
-          },
-          contents: [{
-            role: "user",
-            parts: [{ text: question.trim() }]
-          }],
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 700
-          }
-        })
-      }
-    );
+    const data = await response.json();
 
     if (!response.ok) {
       return res.status(502).json({
@@ -133,8 +92,6 @@ export default async function handler(req, res) {
         upstreamStatus: response.status
       });
     }
-
-    const data = await response.json();
 
     const answer = data.candidates?.[0]
       ?.content?.parts
@@ -150,15 +107,23 @@ export default async function handler(req, res) {
     }
 
     return res.status(200).json({
-      answer,
-      model
+      answer
     });
 
   } catch (error) {
-    console.error("Chat error:", error);
+    if (error.name === "AbortError") {
+      return res.status(504).json({
+        error: "Gemini did not respond within 20 seconds"
+      });
+    }
+
+    console.error("Gemini error:", error);
 
     return res.status(500).json({
-      error: "Unable to process request"
+      error: "Server error"
     });
+
+  } finally {
+    clearTimeout(timeout);
   }
 }
